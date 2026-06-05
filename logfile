@@ -1,0 +1,25 @@
+2026-06-05 13:54:41.583 +08 [9704] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-05 13:54:41.592 +08 [9704] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-05 13:54:41.592 +08 [9704] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-05 13:54:41.667 +08 [9112] LOG:  database system was shut down at 2026-06-05 13:54:16 +08
+2026-06-05 13:54:41.674 +08 [9704] LOG:  database system is ready to accept connections
+2026-06-05 13:59:41.766 +08 [24012] LOG:  checkpoint starting: time
+2026-06-05 14:01:35.432 +08 [24012] LOG:  checkpoint complete: wrote 1028 buffers (6.3%), wrote 3 SLRU buffers; 1 WAL file(s) added, 0 removed, 0 recycled; write=113.283 s, sync=0.335 s, total=113.668 s; sync files=312, longest=0.002 s, average=0.002 s; distance=4999 kB, estimate=4999 kB; lsn=0/1CD3018, redo lsn=0/1CD2F88
+2026-06-05 14:02:34.413 +08 [24012] LOG:  shutting down
+2026-06-05 14:02:34.449 +08 [24012] LOG:  checkpoint starting: shutdown immediate
+2026-06-05 14:02:34.468 +08 [9704] LOG:  received fast shutdown request
+2026-06-05 14:02:34.601 +08 [9704] LOG:  aborting any active transactions
+2026-06-05 14:02:34.602 +08 [3592] FATAL:  terminating connection due to administrator command
+2026-06-05 14:02:34.602 +08 [19852] FATAL:  terminating connection due to administrator command
+2026-06-05 14:02:34.602 +08 [4408] FATAL:  terminating connection due to administrator command
+2026-06-05 14:02:34.602 +08 [10648] FATAL:  terminating connection due to administrator command
+2026-06-05 14:02:34.603 +08 [17328] FATAL:  terminating connection due to administrator command
+2026-06-05 14:02:34.603 +08 [13324] FATAL:  terminating connection due to administrator command
+2026-06-05 14:02:34.603 +08 [13752] FATAL:  terminating connection due to administrator command
+2026-06-05 14:02:34.603 +08 [19676] FATAL:  terminating connection due to administrator command
+2026-06-05 14:02:34.603 +08 [9552] FATAL:  terminating connection due to administrator command
+2026-06-05 14:02:34.603 +08 [13236] FATAL:  terminating connection due to administrator command
+2026-06-05 14:02:34.794 +08 [22964] ERROR:  canceling statement due to user request
+2026-06-05 14:02:34.837 +08 [9704] LOG:  background worker "logical replication launcher" (PID 22964) exited with exit code 1
+2026-06-05 14:02:34.870 +08 [24012] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.038 s, sync=0.001 s, total=0.427 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=4499 kB; lsn=0/1CD30C8, redo lsn=0/1CD30C8
+2026-06-05 14:02:35.315 +08 [9704] LOG:  database system is shut down
