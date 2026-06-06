@@ -158,3 +158,45 @@
 2026-06-06 12:21:23.028 +08 [3344] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.001 s, total=0.037 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=27 kB; lsn=0/22A6080, redo lsn=0/22A6080
 2026-06-06 12:21:23.031 +08 [17032] LOG:  background worker "logical replication launcher" (PID 20940) exited with exit code 1
 2026-06-06 12:21:23.083 +08 [17032] LOG:  database system is shut down
+2026-06-06 13:02:47.267 +08 [2360] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-06 13:02:47.272 +08 [2360] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-06 13:02:47.272 +08 [2360] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-06 13:02:47.444 +08 [6808] LOG:  database system was shut down at 2026-06-06 12:21:23 +08
+2026-06-06 13:02:47.460 +08 [2360] LOG:  database system is ready to accept connections
+2026-06-06 13:07:47.345 +08 [24180] LOG:  checkpoint starting: time
+2026-06-06 13:07:47.385 +08 [24180] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.004 s, total=0.041 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/22A6188, redo lsn=0/22A6130
+2026-06-06 13:16:07.075 +08 [2360] LOG:  client backend (PID 19336) was terminated by exception 0x40010004
+2026-06-06 13:16:07.075 +08 [2360] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-06-06 13:16:07.075 +08 [2360] LOG:  terminating any other active server processes
+2026-06-06 13:16:07.104 +08 [2360] LOG:  all server processes terminated; reinitializing
+^C2026-06-06 19:12:44.165 +08 [5128] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-06 19:12:44.171 +08 [5128] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-06 19:12:44.172 +08 [5128] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-06 19:12:44.266 +08 [23956] LOG:  database system was interrupted; last known up at 2026-06-06 13:07:47 +08
+2026-06-06 19:12:46.523 +08 [23956] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-06-06 19:12:46.530 +08 [23956] LOG:  redo starts at 0/22A6130
+2026-06-06 19:12:46.531 +08 [23956] LOG:  invalid record length at 0/22A6238: expected at least 24, got 0
+2026-06-06 19:12:46.531 +08 [23956] LOG:  redo done at 0/22A6200 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-06-06 19:12:46.536 +08 [17184] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-06-06 19:12:46.550 +08 [17184] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.003 s, total=0.016 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/22A6238, redo lsn=0/22A6238
+2026-06-06 19:12:46.558 +08 [5128] LOG:  database system is ready to accept connections
+2026-06-06 19:23:53.909 +08 [9924] ERROR:  null value in column "id" of relation "profiles" violates not-null constraint
+2026-06-06 19:23:53.909 +08 [9924] DETAIL:  Failing row contains (null, Aspiring Java Engineer to Accenture, 2004-01-12, 12, 09265460320).
+2026-06-06 19:23:53.909 +08 [9924] STATEMENT:  -- CREATE TABLE IF NOT EXISTS users (
+	-- id BIGSERIAL PRIMARY KEY,
+	-- name VARCHAR(255),
+	-- email VARCHAR(255),
+	-- password VARCHAR(255)
+	-- );
+	
+	-- SELECT * FROM information_schema.tables 
+	-- WHERE table_schema = 'public' AND table_name = 'users';
+	
+	INSERT INTO profiles (bio, phone_number, date_of_birth, loyalty_points)
+	VALUES ('Aspiring Java Engineer to Accenture', '09265460320', '2004-01-12', 12);
+	
+	SELECT * FROM profiles;
+2026-06-06 19:27:46.591 +08 [17184] LOG:  checkpoint starting: time
+2026-06-06 19:27:47.075 +08 [17184] LOG:  checkpoint complete: wrote 4 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.447 s, sync=0.009 s, total=0.497 s; sync files=4, longest=0.004 s, average=0.003 s; distance=0 kB, estimate=0 kB; lsn=0/22A65B8, redo lsn=0/22A6560
+2026-06-06 19:37:46.104 +08 [17184] LOG:  checkpoint starting: time
+2026-06-06 19:37:46.833 +08 [17184] LOG:  checkpoint complete: wrote 6 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.664 s, sync=0.023 s, total=0.730 s; sync files=6, longest=0.013 s, average=0.004 s; distance=9 kB, estimate=9 kB; lsn=0/22A8A18, redo lsn=0/22A89C0

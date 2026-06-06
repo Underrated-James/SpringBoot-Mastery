@@ -1,8 +1,7 @@
 package com.example.Practice1.Controllers;
 
-
-import com.example.Practice1.Entities.Product;
-import com.example.Practice1.Repositories.ProductRepository;
+import com.example.Practice1.Entities.Address;
+import com.example.Practice1.Repositories.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,24 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/products")
-
-public class ProductController {
+@RequestMapping("/address")
+public class AddressController {
     @Autowired
-    private ProductRepository productRepository;
+    private AddressRepository addressRepository;
 
     @GetMapping
-    public Iterable<Product> getAllProducts(){
-        return productRepository.findAll();
+    public Iterable<Address> getAllAddress(){
+        return addressRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable long id){
-
-        var profile = productRepository.findById(id).orElse(null);
-        if(profile == null){
+    public ResponseEntity<Address> getAddressById(@PathVariable long id){
+        var address = addressRepository.findById(id).orElse(null);
+        if(address == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(profile);
+        return ResponseEntity.ok(address);
     }
 }
