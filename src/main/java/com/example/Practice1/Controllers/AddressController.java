@@ -1,6 +1,6 @@
 package com.example.Practice1.Controllers;
 
-import com.example.Practice1.Entities.Address;
+import com.example.Practice1.Dtos.AddressDto;
 import com.example.Practice1.Repositories.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +16,32 @@ public class AddressController {
     private AddressRepository addressRepository;
 
     @GetMapping
-    public Iterable<Address> getAllAddress(){
-        return addressRepository.findAll();
+    public Iterable<AddressDto> getAllAddress(){
+
+        return addressRepository.findAll()
+                .stream()
+                .map(address -> new AddressDto(address.getId(),
+                        address.getStreet(),
+                        address.getCity(),
+                        address.getState(),
+                        address.getCountry(),
+                        address.getUser().getId()))
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Address> getAddressById(@PathVariable long id){
+    public ResponseEntity<AddressDto> getAddressById(@PathVariable long id){
         var address = addressRepository.findById(id).orElse(null);
         if(address == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(address);
+        var addressDto = new AddressDto(address.getId(),
+                address.getStreet(),
+                address.getCity(),
+                address.getState(),
+                address.getCountry(),
+                address.getUser().getId());
+
+        return ResponseEntity.ok(addressDto);
     }
 }

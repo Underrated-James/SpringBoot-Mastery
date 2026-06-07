@@ -1,6 +1,7 @@
 package com.example.Practice1.Controllers;
 
 
+import com.example.Practice1.Dtos.ProductDto;
 import com.example.Practice1.Entities.Product;
 import com.example.Practice1.Repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,21 @@ public class ProductController {
     private ProductRepository productRepository;
 
     @GetMapping
-    public Iterable<Product> getAllProducts(){
-        return productRepository.findAll();
+    public Iterable<ProductDto> getAllProducts(){
+    return productRepository.findAll()
+            .stream()
+            .map(product -> new ProductDto(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory().getId()))
+            .toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable long id){
+    public ResponseEntity<ProductDto> getProductById(@PathVariable long id){
 
-        var profile = productRepository.findById(id).orElse(null);
-        if(profile == null){
+        var product = productRepository.findById(id).orElse(null);
+        if(product == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(profile);
+        var productDto = new ProductDto(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory().getId());
+        return ResponseEntity.ok(productDto);
     }
 }

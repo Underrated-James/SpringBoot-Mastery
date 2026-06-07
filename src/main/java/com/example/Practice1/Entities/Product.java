@@ -27,6 +27,12 @@ public class Product {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Column(name = "location")
+    private String location;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id")
     @JsonManagedReference

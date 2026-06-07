@@ -1,7 +1,7 @@
 package com.example.Practice1.Controllers;
 
 
-import com.example.Practice1.Entities.Profile;
+import com.example.Practice1.Dtos.ProfileDto;
 import com.example.Practice1.Repositories.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +17,25 @@ public class ProfileController {
     private ProfileRepository profileRepository;
 
     @GetMapping
-    public Iterable<Profile> getAllProfile(){
-        return profileRepository.findAll();
+    public Iterable<ProfileDto> getAllProfile(){
+        return profileRepository.findAll()
+                .stream()
+                .map(profile -> new ProfileDto(
+                        profile.getId(),
+                        profile.getBio(),
+                        profile.getHabbits(),
+                        profile.getDateOfBirth(),
+                        profile.getLoyaltyPoints(),
+                        profile.getUser().getId())
+                ).toList();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Profile> getProfileById(@PathVariable long id){
+    public ResponseEntity<ProfileDto> getProfileById(@PathVariable long id){
         var profile = profileRepository.findById(id).orElse(null);
         if(profile == null){
             return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.ok(profile);
+        var profileDto = new ProfileDto(profile.getId(), profile.getBio(), profile.getHabbits(), profile.getDateOfBirth(), profile.getLoyaltyPoints(), profile.getUser().getId());
+        return ResponseEntity.ok(profileDto);
     }
 }
