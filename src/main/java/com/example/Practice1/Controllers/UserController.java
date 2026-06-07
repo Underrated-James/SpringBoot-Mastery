@@ -3,7 +3,9 @@ package com.example.Practice1.Controllers;
 
 import com.example.Practice1.Dtos.UserDto;
 import com.example.Practice1.Entities.User;
+import com.example.Practice1.Mappers.UserMapper;
 import com.example.Practice1.Repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,16 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final UserMapper userMapper;
 
     @GetMapping
     public Iterable<UserDto> getAllUsers(){
         System.out.print("Users endpoint");
         return userRepository.findAll()
                 .stream()
-                .map(user -> new UserDto(user.getId(), user.getName(), user.getEmail(), user.getProfile(), user.getAddresses(), user.getFavoriteProducts()))
+                .map(userMapper::toDto)
                 .toList();
     }
 
@@ -32,8 +37,7 @@ public class UserController {
        if(user == null){
            return ResponseEntity.notFound().build();
        }
-       var userDto = new UserDto(user.getId(), user.getName(), user.getEmail(), user.getProfile(), user.getAddresses(), user.getFavoriteProducts());
-       return ResponseEntity.ok(userDto);
+       return ResponseEntity.ok(userMapper.toDto(user));
     }
 
 }

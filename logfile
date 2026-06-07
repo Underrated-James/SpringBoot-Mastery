@@ -285,3 +285,11 @@
 2026-06-07 09:40:19.976 +08 [9456] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.121 s, sync=0.008 s, total=0.153 s; sync files=2, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=23 kB; lsn=0/22AF790, redo lsn=0/22AF738
 2026-06-07 10:30:20.067 +08 [9456] LOG:  checkpoint starting: time
 2026-06-07 10:30:20.521 +08 [9456] LOG:  checkpoint complete: wrote 4 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.433 s, sync=0.007 s, total=0.462 s; sync files=5, longest=0.002 s, average=0.002 s; distance=26 kB, estimate=26 kB; lsn=0/22B6280, redo lsn=0/22B6228
+2026-06-07 10:45:20.539 +08 [9456] LOG:  checkpoint starting: time
+2026-06-07 10:45:23.009 +08 [9456] LOG:  checkpoint complete: wrote 22 buffers (0.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=2.408 s, sync=0.037 s, total=2.472 s; sync files=17, longest=0.013 s, average=0.003 s; distance=125 kB, estimate=125 kB; lsn=0/22D59C8, redo lsn=0/22D5938
+2026-06-07 10:55:20.030 +08 [9456] LOG:  checkpoint starting: time
+2026-06-07 10:55:20.284 +08 [9456] LOG:  checkpoint complete: wrote 2 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.225 s, sync=0.005 s, total=0.257 s; sync files=2, longest=0.003 s, average=0.003 s; distance=5 kB, estimate=113 kB; lsn=0/22D7020, redo lsn=0/22D6FC8
+2026-06-07 11:00:20.358 +08 [9456] LOG:  checkpoint starting: time
+2026-06-07 11:00:21.687 +08 [9456] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.136 s, sync=0.239 s, total=1.369 s; sync files=2, longest=0.143 s, average=0.120 s; distance=0 kB, estimate=102 kB; lsn=0/22D73B0, redo lsn=0/22D7358
+2026-06-07 11:20:20.710 +08 [9456] LOG:  checkpoint starting: time
+2026-06-07 11:20:20.838 +08 [9456] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.109 s, sync=0.004 s, total=0.131 s; sync files=2, longest=0.003 s, average=0.002 s; distance=0 kB, estimate=92 kB; lsn=0/22D76E8, redo lsn=0/22D7690

@@ -1,0 +1,12 @@
+package com.example.Practice1.Mappers;
+
+import com.example.Practice1.Dtos.UserDto;
+import com.example.Practice1.Entities.User;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+    @Mapping(source = "id", target = "id")
+    UserDto toDto(User user);
+}

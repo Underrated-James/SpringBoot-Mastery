@@ -1,7 +1,9 @@
 package com.example.Practice1.Controllers;
 
 import com.example.Practice1.Dtos.AddressDto;
+import com.example.Practice1.Mappers.AddressMapper;
 import com.example.Practice1.Repositories.AddressRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,21 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/address")
+@AllArgsConstructor
 public class AddressController {
     @Autowired
-    private AddressRepository addressRepository;
+    private final AddressRepository addressRepository;
+
+    private final AddressMapper addressMapper;
 
     @GetMapping
     public Iterable<AddressDto> getAllAddress(){
 
         return addressRepository.findAll()
                 .stream()
-                .map(address -> new AddressDto(address.getId(),
-                        address.getStreet(),
-                        address.getCity(),
-                        address.getState(),
-                        address.getCountry(),
-                        address.getUser().getId()))
+                .map(addressMapper::toDto)
                 .toList();
     }
 
@@ -35,13 +35,6 @@ public class AddressController {
         if(address == null){
             return ResponseEntity.notFound().build();
         }
-        var addressDto = new AddressDto(address.getId(),
-                address.getStreet(),
-                address.getCity(),
-                address.getState(),
-                address.getCountry(),
-                address.getUser().getId());
-
-        return ResponseEntity.ok(addressDto);
+        return ResponseEntity.ok(addressMapper.toDto(address));
     }
 }
