@@ -2,16 +2,15 @@ package com.example.Practice1.Controllers;
 
 
 import com.example.Practice1.Dtos.UserDto;
-import com.example.Practice1.Entities.User;
 import com.example.Practice1.Mappers.UserMapper;
 import com.example.Practice1.Repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -23,9 +22,16 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public Iterable<UserDto> getAllUsers(){
+    public Iterable<UserDto> getAllUsers(
+            @RequestParam(required = false, defaultValue = "") String sort
+    ){
         System.out.print("Users endpoint");
-        return userRepository.findAll()
+
+
+        if(!Set.of("name", "email").contains(sort)){
+            sort = "name";
+        }
+        return userRepository.findAll(Sort.by(sort))
                 .stream()
                 .map(userMapper::toDto)
                 .toList();

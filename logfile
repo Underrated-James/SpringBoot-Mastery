@@ -420,3 +420,25 @@
 	-- VALUES ('Bam Aquino', 'bam@example.gove.ph', 'b@M4Qu1N0');
 2026-06-11 10:27:06.976 +08 [9444] LOG:  checkpoint starting: time
 2026-06-11 10:27:07.340 +08 [9444] LOG:  checkpoint complete: wrote 3 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.338 s, sync=0.008 s, total=0.368 s; sync files=4, longest=0.003 s, average=0.002 s; distance=1 kB, estimate=1 kB; lsn=0/22D7C60, redo lsn=0/22D7C08
+2026-06-11 20:21:14.145 +08 [9444] LOG:  checkpoint starting: time
+2026-06-11 20:21:14.300 +08 [9444] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.122 s, sync=0.004 s, total=0.161 s; sync files=2, longest=0.003 s, average=0.002 s; distance=0 kB, estimate=1 kB; lsn=0/22D7FC0, redo lsn=0/22D7F68
+2026-06-11 21:13:55.963 +08 [23564] ERROR:  syntax error at end of input at character 68
+2026-06-11 21:13:55.963 +08 [23564] STATEMENT:  UPDATE products 
+	-- SET email = 'Aamon@gmail.com' 
+	-- WHERE id = 2;
+2026-06-11 21:14:55.260 +08 [23564] ERROR:  syntax error at end of input at character 52
+2026-06-11 21:14:55.260 +08 [23564] STATEMENT:  UPDATE products 
+	-- SET price = 33 
+	-- WHERE id = 3
+2026-06-11 21:15:09.136 +08 [23564] ERROR:  syntax error at end of input at character 52
+2026-06-11 21:15:09.136 +08 [23564] STATEMENT:  UPDATE products 
+	-- SET price = 33 
+	-- WHERE id = 3
+2026-06-11 21:16:04.116 +08 [23564] ERROR:  syntax error at end of input at character 53
+2026-06-11 21:16:04.116 +08 [23564] STATEMENT:  UPDATE products 
+	-- SET price = 33 
+	-- WHERE id = 3;
+2026-06-11 21:16:14.359 +08 [9444] LOG:  checkpoint starting: time
+2026-06-11 21:16:14.518 +08 [9444] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.129 s, sync=0.004 s, total=0.164 s; sync files=2, longest=0.002 s, average=0.002 s; distance=1 kB, estimate=1 kB; lsn=0/22D8658, redo lsn=0/22D8600
+2026-06-11 21:21:14.521 +08 [9444] LOG:  checkpoint starting: time
+2026-06-11 21:21:14.667 +08 [9444] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.125 s, sync=0.004 s, total=0.148 s; sync files=2, longest=0.002 s, average=0.002 s; distance=1 kB, estimate=1 kB; lsn=0/22D8D68, redo lsn=0/22D8D10

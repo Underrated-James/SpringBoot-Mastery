@@ -2,27 +2,36 @@ package com.example.Practice1.Controllers;
 
 
 import com.example.Practice1.Dtos.ProductDto;
-import com.example.Practice1.Entities.Product;
+import com.example.Practice1.Mappers.ProductMapper;
 import com.example.Practice1.Repositories.ProductRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/products")
-
+@AllArgsConstructor
 public class ProductController {
     @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    private final ProductMapper productMapper;
 
     @GetMapping
-    public Iterable<ProductDto> getAllProducts(){
-    return productRepository.findAll()
+    public Iterable<ProductDto> getAllProducts(
+            @RequestParam(required = false, defaultValue = "id") String sort
+    ){
+
+        if(!Set.of("name", "price", "quantity").contains(sort)){
+            sort = "name";
+        }
+    return productRepository.findAll(Sort.by(sort))
             .stream()
-            .map(product -> new ProductDto(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory().getId()))
+            .map(productMapper::toDto)
             .toList();
     }
 
@@ -33,7 +42,7 @@ public class ProductController {
         if(product == null){
             return ResponseEntity.notFound().build();
         }
-        var productDto = new ProductDto(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory().getId());
-        return ResponseEntity.ok(productDto);
+
+        return ResponseEntity.ok(productMapper.toDto(product));
     }
 }
