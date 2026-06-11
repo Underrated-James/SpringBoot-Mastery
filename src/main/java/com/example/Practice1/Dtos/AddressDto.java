@@ -1,11 +1,13 @@
 package com.example.Practice1.Dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
 public class AddressDto {
+    @JsonProperty("address_id")
     private Long id;
     private String street;
     private String city;

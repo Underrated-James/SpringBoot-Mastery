@@ -293,3 +293,130 @@
 2026-06-07 11:00:21.687 +08 [9456] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.136 s, sync=0.239 s, total=1.369 s; sync files=2, longest=0.143 s, average=0.120 s; distance=0 kB, estimate=102 kB; lsn=0/22D73B0, redo lsn=0/22D7358
 2026-06-07 11:20:20.710 +08 [9456] LOG:  checkpoint starting: time
 2026-06-07 11:20:20.838 +08 [9456] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.109 s, sync=0.004 s, total=0.131 s; sync files=2, longest=0.003 s, average=0.002 s; distance=0 kB, estimate=92 kB; lsn=0/22D76E8, redo lsn=0/22D7690
+2026-06-07 12:09:29.802 +08 [4540] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-06-07 12:09:29.803 +08 [25100] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-06-07 12:09:29.803 +08 [16140] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-06-07 12:09:29.803 +08 [18308] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-06-07 12:09:29.803 +08 [11008] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-06-07 12:09:29.802 +08 [15116] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-06-07 12:09:29.802 +08 [2124] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-06-07 12:09:29.803 +08 [21000] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-06-07 12:09:29.803 +08 [11136] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-06-07 12:09:29.803 +08 [7924] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-06-07 12:22:28.994 +08 [23424] ERROR:  relation "profile" does not exist at character 446
+2026-06-07 12:22:28.994 +08 [23424] STATEMENT:  -- CREATE TABLE IF NOT EXISTS users (
+	-- id BIGSERIAL PRIMARY KEY,
+	-- name VARCHAR(255),
+	-- email VARCHAR(255),
+	-- password VARCHAR(255)
+	-- );
+	
+	-- SELECT * FROM information_schema.tables 
+	-- WHERE table_schema = 'public' AND table_name = 'users';
+	
+	-- INSERT INTO products (name, description, p)
+	-- VALUES ('John Smith', 'Smith23@example.com', '!Passw0rd123');
+	
+	-- UPDATE addresses 
+	-- SET country = 'Philippines'
+	-- WHERE id = 1;
+	
+	SELECT * FROM profile;
+2026-06-07 12:47:17.368 +08 [17072] LOG:  client backend (PID 16836) was terminated by exception 0x40010004
+2026-06-07 12:47:17.368 +08 [17072] DETAIL:  Failed process was running: 
+	        SELECT
+	            roles.oid as id, roles.rolname as name,
+	            roles.rolsuper as is_superuser,
+	            CASE WHEN roles.rolsuper THEN true ELSE roles.rolcreaterole END as
+	            can_create_role,
+	            CASE WHEN roles.rolsuper THEN true
+	            ELSE roles.rolcreatedb END as can_create_db,
+	            CASE WHEN 'pg_signal_backend'=ANY(ARRAY(WITH RECURSIVE cte AS (
+	            SELECT pg_roles.oid,pg_roles.rolname FROM pg_roles
+	                WHERE pg_roles.oid = roles.oid
+	            UNION ALL
+	            SELECT m.roleid,pgr.rolname FROM cte cte_1
+	                JOIN pg_auth_members m ON m.member = cte_1.oid
+	                JOIN pg_roles pgr ON pgr.oid = m.roleid)
+	            SELECT rolname  FROM cte)) THEN True
+	            ELSE False END as can_signal_backend
+	        FROM
+	            pg_catalog.pg_roles as roles
+	        WHERE
+	            rolname = current_user
+2026-06-07 12:47:17.368 +08 [17072] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-06-07 12:47:17.374 +08 [17072] LOG:  terminating any other active server processes
+2026-06-07 12:47:17.534 +08 [17072] LOG:  all server processes terminated; reinitializing
+2026-06-11 09:22:04.476 +08 [15904] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-11 09:22:04.491 +08 [15904] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-11 09:22:04.491 +08 [15904] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-11 09:22:04.583 +08 [14360] LOG:  database system was interrupted; last known up at 2026-06-07 11:20:20 +08
+2026-06-11 09:22:04.605 +08 [12596] FATAL:  the database system is starting up
+2026-06-11 09:22:04.640 +08 [10720] FATAL:  the database system is starting up
+2026-06-11 09:22:04.675 +08 [11224] FATAL:  the database system is starting up
+2026-06-11 09:22:04.712 +08 [23112] FATAL:  the database system is starting up
+2026-06-11 09:22:06.224 +08 [11708] FATAL:  the database system is starting up
+2026-06-11 09:22:06.251 +08 [16892] FATAL:  the database system is starting up
+2026-06-11 09:22:06.789 +08 [14360] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-06-11 09:22:06.796 +08 [14360] LOG:  redo starts at 0/22D7690
+2026-06-11 09:22:06.796 +08 [14360] LOG:  invalid record length at 0/22D7798: expected at least 24, got 0
+2026-06-11 09:22:06.797 +08 [14360] LOG:  redo done at 0/22D7760 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-06-11 09:22:06.800 +08 [9444] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-06-11 09:22:06.812 +08 [25228] FATAL:  the database system is starting up
+2026-06-11 09:22:06.815 +08 [9444] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.003 s, total=0.017 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/22D7798, redo lsn=0/22D7798
+2026-06-11 09:22:06.821 +08 [15904] LOG:  database system is ready to accept connections
+2026-06-11 09:22:06.847 +08 [6308] FATAL:  the database system is not yet accepting connections
+2026-06-11 09:22:06.847 +08 [6308] DETAIL:  Consistent recovery state has not been yet reached.
+2026-06-11 09:22:34.482 +08 [19732] ERROR:  relation "addres" does not exist at character 480
+2026-06-11 09:22:34.482 +08 [19732] STATEMENT:  -- CREATE TABLE IF NOT EXISTS users (
+	-- id BIGSERIAL PRIMARY KEY,
+	-- name VARCHAR(255),
+	-- email VARCHAR(255),
+	-- password VARCHAR(255)
+	-- );
+	
+	-- SELECT * FROM information_schema.tables 
+	-- WHERE table_schema = 'public' AND table_name = 'users';
+	
+	-- INSERT INTO products (name, description, p)
+	-- VALUES ('John Smith', 'Smith23@example.com', '!Passw0rd123');
+	
+	-- UPDATE profiles 
+	-- SET habbits = 'Coding everyday and building Spring Boot apps' 
+	-- WHERE id = 2;
+	
+	SELECT * FROM addres;
+2026-06-11 09:22:40.329 +08 [19732] ERROR:  relation "address" does not exist at character 480
+2026-06-11 09:22:40.329 +08 [19732] STATEMENT:  -- CREATE TABLE IF NOT EXISTS users (
+	-- id BIGSERIAL PRIMARY KEY,
+	-- name VARCHAR(255),
+	-- email VARCHAR(255),
+	-- password VARCHAR(255)
+	-- );
+	
+	-- SELECT * FROM information_schema.tables 
+	-- WHERE table_schema = 'public' AND table_name = 'users';
+	
+	-- INSERT INTO products (name, description, p)
+	-- VALUES ('John Smith', 'Smith23@example.com', '!Passw0rd123');
+	
+	-- UPDATE profiles 
+	-- SET habbits = 'Coding everyday and building Spring Boot apps' 
+	-- WHERE id = 2;
+	
+	SELECT * FROM address;
+2026-06-11 10:22:43.224 +08 [19732] ERROR:  syntax error at end of input at character 104
+2026-06-11 10:22:43.224 +08 [19732] STATEMENT:  INSERT INTO users (name, email, password)
+	-- VALUES ('Bam Aquino', 'bam@example.gove.ph', 'b@M4Qu1N0');
+2026-06-11 10:27:06.976 +08 [9444] LOG:  checkpoint starting: time
+2026-06-11 10:27:07.340 +08 [9444] LOG:  checkpoint complete: wrote 3 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.338 s, sync=0.008 s, total=0.368 s; sync files=4, longest=0.003 s, average=0.002 s; distance=1 kB, estimate=1 kB; lsn=0/22D7C60, redo lsn=0/22D7C08
