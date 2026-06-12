@@ -502,3 +502,69 @@
 	
 	SELECT * FROM produts;
 2026-06-12 10:24:37.175 +08 [22480] LOG:  checkpoint starting: time
+2026-06-12 10:24:37.966 +08 [22480] LOG:  checkpoint complete: wrote 7 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.761 s, sync=0.015 s, total=0.792 s; sync files=8, longest=0.003 s, average=0.002 s; distance=3 kB, estimate=137 kB; lsn=0/2307B10, redo lsn=0/2307AB8
+2026-06-12 10:40:41.197 +08 [13880] ERROR:  trailing junk after numeric literal at or near "28.64°" at character 366
+2026-06-12 10:40:41.197 +08 [13880] STATEMENT:  -- CREATE TABLE IF NOT EXISTS users (
+	-- id BIGSERIAL PRIMARY KEY,
+	-- name VARCHAR(255),
+	-- email VARCHAR(255),
+	-- password VARCHAR(255)
+	-- );
+	
+	-- SELECT * FROM information_schema.tables 
+	-- WHERE table_schema = 'public' AND table_name = 'users';
+	
+	
+	-- ========Sellers=========
+	INSERT INTO sellers (name, location, store_name)
+	VALUES ('Ranchodas Shamadas Chanchad', 28.64° & 77.21', 'Imperial College of Engineering');
+	
+	-- ========Categories=========
+	-- INSERT INTO categories (name)
+	-- VALUES ('Skincare Products');
+	
+	-- ========Products=========
+	-- INSERT INTO products (name, location, description, price, category_id, quantity, seller_id)
+	-- VALUES ('Niacinimide Serum', '18.3242° & 879.2343', 'Top Serum of the Philippines', 246, 2, 13, 1);
+	
+	-- UPDATE profiles 
+	-- SET habbits = 'Coding everyday and building Spring Boot apps' 
+	-- WHERE id = 2;
+	
+	SELECT * FROM sellers;
+2026-06-12 10:44:37.987 +08 [22480] LOG:  checkpoint starting: time
+2026-06-12 10:44:38.385 +08 [22480] LOG:  checkpoint complete: wrote 3 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.343 s, sync=0.019 s, total=0.402 s; sync files=4, longest=0.014 s, average=0.005 s; distance=0 kB, estimate=123 kB; lsn=0/2307E80, redo lsn=0/2307E28
+2026-06-12 10:44:41.363 +08 [13880] ERROR:  column "storename" of relation "sellers" does not exist at character 487
+2026-06-12 10:44:41.363 +08 [13880] STATEMENT:  -- CREATE TABLE IF NOT EXISTS users (
+	-- id BIGSERIAL PRIMARY KEY,
+	-- name VARCHAR(255),
+	-- email VARCHAR(255),
+	-- password VARCHAR(255)
+	-- );
+	
+	-- SELECT * FROM information_schema.tables 
+	-- WHERE table_schema = 'public' AND table_name = 'users';
+	
+	
+	-- ======== Add Sellers=========
+	-- INSERT INTO sellers (name, location, store_name)
+	-- VALUES ('Ranchodas Shamadas Chanchad', '28.64° & 77.21', 'Imperial College of Engineering');
+	
+	-- ======== Update Sellers=========
+	UPDATE sellers
+	set storeName = 'Cmperial College of Engineering'
+	WHERE id = 2;
+	
+	-- ========Categories=========
+	-- INSERT INTO categories (name)
+	-- VALUES ('Skincare Products');
+	
+	-- ========Products=========
+	-- INSERT INTO products (name, location, description, price, category_id, quantity, seller_id)
+	-- VALUES ('Niacinimide Serum', '18.3242° & 879.2343', 'Top Serum of the Philippines', 246, 2, 13, 1);
+	
+	-- UPDATE profiles 
+	-- SET habbits = 'Coding everyday and building Spring Boot apps' 
+	-- WHERE id = 2;
+	
+	SELECT * FROM sellers;

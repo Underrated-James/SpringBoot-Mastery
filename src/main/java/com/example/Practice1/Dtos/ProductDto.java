@@ -15,4 +15,5 @@ public class ProductDto {
     private Integer quantity;
     private long categoryId;
     private LocalDateTime createdAt;
+    private Long sellerId;
 }

@@ -7,6 +7,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
+    @Mapping(source = "seller.id", target = "sellerId")
+
     @Mapping(source = "category.id", target = "categoryId")
 
     @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
