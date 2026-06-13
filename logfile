@@ -568,3 +568,30 @@
 	-- WHERE id = 2;
 	
 	SELECT * FROM sellers;
+2026-06-12 10:48:22.481 +08 [7740] LOG:  received fast shutdown request
+2026-06-12 10:48:22.486 +08 [7740] LOG:  aborting any active transactions
+2026-06-12 10:48:22.488 +08 [5020] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.489 +08 [7360] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.489 +08 [3492] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.490 +08 [7964] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.491 +08 [14668] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.492 +08 [26328] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.493 +08 [12192] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.494 +08 [19240] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.495 +08 [22956] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.496 +08 [22716] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.497 +08 [13880] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.498 +08 [14996] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.508 +08 [21572] FATAL:  terminating connection due to administrator command
+2026-06-12 10:48:22.539 +08 [7740] LOG:  background worker "logical replication launcher" (PID 7844) exited with exit code 1
+2026-06-12 10:48:22.549 +08 [22480] LOG:  shutting down
+2026-06-12 10:48:22.552 +08 [22480] LOG:  checkpoint starting: shutdown immediate
+2026-06-12 10:48:22.575 +08 [22480] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.003 s, total=0.026 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=111 kB; lsn=0/2308140, redo lsn=0/2308140
+2026-06-12 10:48:22.620 +08 [7740] LOG:  database system is shut down
+2026-06-12 14:34:14.499 +08 [12648] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-12 14:34:14.506 +08 [12648] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-12 14:34:14.506 +08 [12648] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-12 14:34:14.575 +08 [13072] LOG:  database system was shut down at 2026-06-12 10:48:22 +08
+2026-06-12 14:34:14.590 +08 [12648] LOG:  database system is ready to accept connections
+2026-06-12 14:39:14.581 +08 [8808] LOG:  checkpoint starting: time
+2026-06-12 14:39:14.602 +08 [8808] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.003 s, total=0.026 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/2308248, redo lsn=0/23081F0

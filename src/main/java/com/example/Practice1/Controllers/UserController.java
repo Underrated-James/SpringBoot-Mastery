@@ -23,9 +23,10 @@ public class UserController {
 
     @GetMapping
     public Iterable<UserDto> getAllUsers(
+            @RequestHeader(name = "auth-token")String auth,
             @RequestParam(required = false, defaultValue = "") String sort
     ){
-        System.out.print("Users endpoint");
+        System.out.print("the auth token value is " + auth);
 
 
         if(!Set.of("name", "email").contains(sort)){
