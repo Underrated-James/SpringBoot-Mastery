@@ -1,5 +1,7 @@
 package com.example.Practice1.Entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,7 +39,6 @@ public class Profile {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @MapsId
-    @JsonManagedReference
-    @JsonIgnore
+    @JsonIgnoreProperties({"profile", "addresses", "favoriteProducts"})
     private User user;
 }

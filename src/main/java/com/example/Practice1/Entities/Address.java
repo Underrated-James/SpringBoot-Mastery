@@ -1,6 +1,7 @@
 package com.example.Practice1.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,7 +38,6 @@ public class Address {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @ToString.Exclude
-    @JsonManagedReference
-    @JsonIgnore
+    @JsonIgnoreProperties("addresses")
     private User user;
 }

@@ -1,5 +1,7 @@
 package com.example.Practice1.Entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,8 +26,7 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    @JsonManagedReference
-    @JsonIgnore
+    @JsonIgnoreProperties("category")
     private Set<Product> products = new HashSet<>();
 
     public Category(String name) {

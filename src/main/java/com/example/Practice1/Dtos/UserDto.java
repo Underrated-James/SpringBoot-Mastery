@@ -8,26 +8,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
-
+@NoArgsConstructor
+@Getter
+@Setter
 public class UserDto {
     @JsonProperty("user_id")
-    @Getter private Long id;
-    @Getter private String name;
-    @Getter private String email;
-    @Getter private Profile profile;
-    @Getter private List<Address> address;
+    private Long id;
+    private String name;
+    private String email;
+    private String password;
+    private Profile profile;
+    private List<Address> addresses;
 
-    private Set<Product> favorites;
+    private Set<Product> favoriteProducts;
 
     @JsonIgnore
-    public Set<Product> getFavorites(){
-        return this.favorites;
+    public Set<Product> getFavoriteProducts(){
+        return this.favoriteProducts;
     }
-    @JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
-    @Getter private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdAt;
 }

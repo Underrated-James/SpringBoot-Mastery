@@ -1,5 +1,6 @@
 package com.example.Practice1.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,13 +37,12 @@ public class Product {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id")
-    @JsonManagedReference
+    @JsonIgnoreProperties("products")
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")
     @ToString.Exclude
-    @JsonManagedReference
-    @JsonIgnore
+    @JsonIgnoreProperties("products")
     private Seller seller;
 }

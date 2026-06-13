@@ -1,5 +1,6 @@
 package com.example.Practice1.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,6 +34,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     @Builder.Default
+    @JsonIgnoreProperties("user")
     private List<Address> addresses = new ArrayList<>();
 
     public void addAddress(Address address) {
@@ -46,7 +48,7 @@ public class User {
     }
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
-    @JsonManagedReference
+    @JsonIgnoreProperties("user")
     private Profile profile;
 
     @ManyToMany

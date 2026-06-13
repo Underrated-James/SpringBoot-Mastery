@@ -2,6 +2,7 @@ package com.example.Practice1.Controllers;
 
 
 import com.example.Practice1.Dtos.UserDto;
+import com.example.Practice1.Entities.User;
 import com.example.Practice1.Mappers.UserMapper;
 import com.example.Practice1.Repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,8 @@ public class UserController {
     ){
         System.out.print("the auth token value is " + auth);
 
+        System.out.println("data is sorted by " + sort);
+
 
         if(!Set.of("name", "email").contains(sort)){
             sort = "name";
@@ -45,6 +48,13 @@ public class UserController {
            return ResponseEntity.notFound().build();
        }
        return ResponseEntity.ok(userMapper.toDto(user));
+    }
+
+
+    @PostMapping
+    public UserDto createUser(@RequestBody UserDto data){
+        System.out.println(data);
+        return data;
     }
 
 }
