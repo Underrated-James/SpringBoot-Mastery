@@ -1,8 +1,8 @@
 package com.example.Practice1.Controllers;
 
 
+import com.example.Practice1.Dtos.Request.UserRequestDto;
 import com.example.Practice1.Dtos.UserDto;
-import com.example.Practice1.Entities.User;
 import com.example.Practice1.Mappers.UserMapper;
 import com.example.Practice1.Repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Set;
 
@@ -52,9 +53,21 @@ public class UserController {
 
 
     @PostMapping
-    public UserDto createUser(@RequestBody UserDto data){
-        System.out.println(data);
-        return data;
+    public ResponseEntity<UserDto> createUser(
+            @RequestBody UserRequestDto request,
+            UriComponentsBuilder uriComponentsBuilder
+            ) {
+        var user = userMapper.toEntity(request);
+        userRepository.save(user);
+
+        var userDto = userMapper.toDto(user);
+
+        System.out.println(user);
+
+        var uri = uriComponentsBuilder.path("/users/{id}").buildAndExpand(userDto.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(userDto);
+
     }
 
 }

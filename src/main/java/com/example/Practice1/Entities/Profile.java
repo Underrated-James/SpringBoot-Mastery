@@ -39,6 +39,6 @@ public class Profile {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @MapsId
-    @JsonIgnoreProperties({"profile", "addresses", "favoriteProducts"})
+    @JsonIgnore
     private User user;
 }

@@ -1,5 +1,6 @@
 package com.example.Practice1.Controllers;
 
+import com.example.Practice1.Dtos.Request.SellerRequestDto;
 import com.example.Practice1.Dtos.SellerDto;
 import com.example.Practice1.Mappers.ProductMapper;
 import com.example.Practice1.Mappers.SellerMapper;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Set;
 
@@ -40,5 +42,18 @@ public class SellerController {
         }
 
         return ResponseEntity.ok(sellerMapper.toDto(seller));
+    }
+
+    @PostMapping
+    public ResponseEntity<SellerDto> createSeller(
+            @RequestBody SellerRequestDto request,
+            UriComponentsBuilder uriComponentsBuilder
+            ){
+        var seller = sellerMapper.toEntity(request);
+        sellerRepository.save(seller);
+        var sellertDto = sellerMapper.toDto(seller);
+
+        var uri = uriComponentsBuilder.path("/sellers/{id}").buildAndExpand(sellertDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(sellertDto);
     }
 }

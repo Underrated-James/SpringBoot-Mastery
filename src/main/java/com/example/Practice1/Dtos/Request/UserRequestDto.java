@@ -1,0 +1,10 @@
+package com.example.Practice1.Dtos.Request;
+
+import lombok.Data;
+
+@Data
+public class UserRequestDto {
+    private String name;
+    private String email;
+    private String password;
+}

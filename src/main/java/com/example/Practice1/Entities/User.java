@@ -16,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
+@ToString(exclude = "addresses")
 @Table(name = "users")
 public class User {
     @Id
@@ -68,6 +69,7 @@ public class User {
         return getClass().getSimpleName() + "(" +
                 "id = " + id + ", " +
                 "name = " + name + ", " +
+                "password = " + password + ", " +
                 "email = " + email + ")";
     }
 }

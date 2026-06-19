@@ -38,6 +38,6 @@ public class Address {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @ToString.Exclude
-    @JsonIgnoreProperties("addresses")
+    @JsonIgnore
     private User user;
 }

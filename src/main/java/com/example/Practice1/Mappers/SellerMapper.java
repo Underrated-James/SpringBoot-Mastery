@@ -1,5 +1,6 @@
 package com.example.Practice1.Mappers;
 
+import com.example.Practice1.Dtos.Request.SellerRequestDto;
 import com.example.Practice1.Dtos.SellerDto;
 import com.example.Practice1.Entities.Seller;
 import org.mapstruct.Mapper;
@@ -11,4 +12,6 @@ public interface SellerMapper {
 
     @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
     SellerDto toDto(Seller seller);
+
+    Seller toEntity(SellerRequestDto request);
 }
