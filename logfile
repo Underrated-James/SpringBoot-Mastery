@@ -693,3 +693,40 @@
 2026-06-19 13:36:28.529 +08 [17432] LOG:  checkpoint complete: wrote 3 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.325 s, sync=0.005 s, total=0.348 s; sync files=4, longest=0.002 s, average=0.002 s; distance=2 kB, estimate=2 kB; lsn=0/2346790, redo lsn=0/2346738
 2026-06-19 13:41:28.536 +08 [17432] LOG:  checkpoint starting: time
 2026-06-19 13:41:29.014 +08 [17432] LOG:  checkpoint complete: wrote 4 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.448 s, sync=0.009 s, total=0.480 s; sync files=5, longest=0.003 s, average=0.002 s; distance=2 kB, estimate=2 kB; lsn=0/23470E0, redo lsn=0/2347088
+2026-06-19 15:36:29.111 +08 [15280] LOG:  client backend (PID 12376) was terminated by exception 0x40010004
+2026-06-19 15:36:29.111 +08 [15280] DETAIL:  Failed process was running: SET application_name = 'PostgreSQL JDBC Driver'
+2026-06-19 15:36:29.111 +08 [15280] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-06-19 15:36:29.125 +08 [15280] LOG:  terminating any other active server processes
+2026-06-19 15:36:29.229 +08 [15280] LOG:  all server processes terminated; reinitializing
+2026-06-20 11:45:11.880 +08 [10572] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-20 11:45:11.896 +08 [10572] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-20 11:45:11.896 +08 [10572] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-20 11:45:12.096 +08 [24040] LOG:  database system was interrupted; last known up at 2026-06-19 13:41:29 +08
+2026-06-20 11:45:14.941 +08 [24040] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-06-20 11:45:14.957 +08 [24040] LOG:  redo starts at 0/2347088
+2026-06-20 11:45:14.958 +08 [24040] LOG:  invalid record length at 0/2347190: expected at least 24, got 0
+2026-06-20 11:45:14.958 +08 [24040] LOG:  redo done at 0/2347158 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-06-20 11:45:14.969 +08 [17976] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-06-20 11:45:14.990 +08 [17976] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.004 s, total=0.024 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/2347190, redo lsn=0/2347190
+2026-06-20 11:45:15.003 +08 [10572] LOG:  database system is ready to accept connections
+2026-06-20 12:50:01.712 +08 [17976] LOG:  checkpoint starting: time
+2026-06-20 12:50:02.110 +08 [17976] LOG:  checkpoint complete: wrote 3 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.357 s, sync=0.020 s, total=0.403 s; sync files=4, longest=0.014 s, average=0.005 s; distance=1 kB, estimate=1 kB; lsn=0/2347928, redo lsn=0/23478D0
+2026-06-20 13:05:01.136 +08 [17976] LOG:  checkpoint starting: time
+2026-06-20 13:05:01.489 +08 [17976] LOG:  checkpoint complete: wrote 3 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.331 s, sync=0.005 s, total=0.356 s; sync files=4, longest=0.002 s, average=0.002 s; distance=2 kB, estimate=2 kB; lsn=0/23482A0, redo lsn=0/2348248
+2026-06-20 13:15:01.518 +08 [17976] LOG:  checkpoint starting: time
+2026-06-20 13:15:01.872 +08 [17976] LOG:  checkpoint complete: wrote 3 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.332 s, sync=0.007 s, total=0.367 s; sync files=4, longest=0.002 s, average=0.002 s; distance=2 kB, estimate=2 kB; lsn=0/2348D80, redo lsn=0/2348D28
+2026-06-20 13:19:48.570 +08 [10572] LOG:  client backend (PID 14184) was terminated by exception 0x40010004
+2026-06-20 13:19:48.570 +08 [10572] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-06-20 13:19:48.581 +08 [10572] LOG:  terminating any other active server processes
+2026-06-20 13:19:49.001 +08 [10572] LOG:  all server processes terminated; reinitializing
+2026-06-20 15:58:19.275 +08 [22520] LOG:  starting PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+2026-06-20 15:58:19.284 +08 [22520] LOG:  listening on IPv6 address "::1", port 5432
+2026-06-20 15:58:19.284 +08 [22520] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2026-06-20 15:58:19.368 +08 [12248] LOG:  database system was interrupted; last known up at 2026-06-20 13:15:01 +08
+2026-06-20 15:58:21.494 +08 [12248] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-06-20 15:58:21.502 +08 [12248] LOG:  redo starts at 0/2348D28
+2026-06-20 15:58:21.505 +08 [12248] LOG:  invalid record length at 0/2349A78: expected at least 24, got 0
+2026-06-20 15:58:21.505 +08 [12248] LOG:  redo done at 0/2349A40 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-06-20 15:58:21.510 +08 [6852] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-06-20 15:58:21.529 +08 [6852] LOG:  checkpoint complete: wrote 3 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.007 s, total=0.022 s; sync files=5, longest=0.002 s, average=0.002 s; distance=3 kB, estimate=3 kB; lsn=0/2349A78, redo lsn=0/2349A78
+2026-06-20 15:58:21.538 +08 [22520] LOG:  database system is ready to accept connections

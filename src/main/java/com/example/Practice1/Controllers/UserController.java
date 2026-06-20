@@ -25,7 +25,7 @@ public class UserController {
 
     @GetMapping
     public Iterable<UserDto> getAllUsers(
-            @RequestHeader(name = "auth-token")String auth,
+            @RequestHeader(name = "auth-token") String auth,
             @RequestParam(required = false, defaultValue = "") String sort
     ){
         System.out.print("the auth token value is " + auth);

@@ -21,6 +21,9 @@ public class CategoryController {
     public Iterable<Category> getAllCategory(){
         return categoryRepository.findAll();
     }
+
+
+
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable byte id){
         var category = categoryRepository.findById(id).orElse(null);
