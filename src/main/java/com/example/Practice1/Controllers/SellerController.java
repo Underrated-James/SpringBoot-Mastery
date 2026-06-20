@@ -76,4 +76,20 @@ public class SellerController {
         return ResponseEntity.ok(sellerMapper.toDto(seller));
 
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSeller(
+            @PathVariable(name = "id")Long id
+    ){
+        var seller = sellerRepository.findById(id).orElse(null);
+
+        if(seller == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        sellerRepository.delete(seller);
+
+        return ResponseEntity.noContent().build();
+
+    }
 }

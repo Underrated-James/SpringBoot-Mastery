@@ -734,3 +734,5 @@
 2026-06-20 16:03:22.035 +08 [6852] LOG:  checkpoint complete: wrote 4 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.450 s, sync=0.010 s, total=0.496 s; sync files=5, longest=0.003 s, average=0.002 s; distance=3 kB, estimate=3 kB; lsn=0/234A760, redo lsn=0/234A708
 2026-06-20 16:28:21.082 +08 [6852] LOG:  checkpoint starting: time
 2026-06-20 16:28:21.235 +08 [6852] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.118 s, sync=0.007 s, total=0.158 s; sync files=2, longest=0.004 s, average=0.004 s; distance=1 kB, estimate=3 kB; lsn=0/234AE18, redo lsn=0/234ADC0
+2026-06-20 16:38:21.263 +08 [6852] LOG:  checkpoint starting: time
+2026-06-20 16:38:21.410 +08 [6852] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.110 s, sync=0.005 s, total=0.151 s; sync files=2, longest=0.003 s, average=0.003 s; distance=1 kB, estimate=2 kB; lsn=0/234B240, redo lsn=0/234B1E8
