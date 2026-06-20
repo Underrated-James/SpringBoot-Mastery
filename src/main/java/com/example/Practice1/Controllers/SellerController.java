@@ -1,8 +1,8 @@
 package com.example.Practice1.Controllers;
 
 import com.example.Practice1.Dtos.Request.SellerRequestDto;
-import com.example.Practice1.Dtos.SellerDto;
-import com.example.Practice1.Mappers.ProductMapper;
+import com.example.Practice1.Dtos.Request.UpdateDtos.SellerUpdateDto;
+import com.example.Practice1.Dtos.Response.SellerDto;
 import com.example.Practice1.Mappers.SellerMapper;
 import com.example.Practice1.Repositories.SellerRepository;
 import lombok.AllArgsConstructor;
@@ -55,5 +55,25 @@ public class SellerController {
 
         var uri = uriComponentsBuilder.path("/sellers/{id}").buildAndExpand(sellertDto.getId()).toUri();
         return ResponseEntity.created(uri).body(sellertDto);
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SellerDto> updateSeller(
+            @RequestBody SellerUpdateDto request,
+            @PathVariable(name = "id")Long id
+    ){
+        var seller = sellerRepository.findById(id).orElse(null);
+
+        if(seller == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        sellerMapper.update(request, seller);
+
+        sellerRepository.save(seller);
+
+        return ResponseEntity.ok(sellerMapper.toDto(seller));
+
     }
 }

@@ -1,7 +1,7 @@
 package com.example.Practice1.Controllers;
 
 
-import com.example.Practice1.Dtos.ProductDto;
+import com.example.Practice1.Dtos.Response.ProductDto;
 import com.example.Practice1.Mappers.ProductMapper;
 import com.example.Practice1.Repositories.ProductRepository;
 import lombok.AllArgsConstructor;

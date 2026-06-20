@@ -1,6 +1,6 @@
 package com.example.Practice1.Controllers;
 
-import com.example.Practice1.Dtos.AddressDto;
+import com.example.Practice1.Dtos.Response.AddressDto;
 import com.example.Practice1.Mappers.AddressMapper;
 import com.example.Practice1.Repositories.AddressRepository;
 import lombok.AllArgsConstructor;

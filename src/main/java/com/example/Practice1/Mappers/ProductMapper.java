@@ -1,6 +1,6 @@
 package com.example.Practice1.Mappers;
 
-import com.example.Practice1.Dtos.ProductDto;
+import com.example.Practice1.Dtos.Response.ProductDto;
 import com.example.Practice1.Entities.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

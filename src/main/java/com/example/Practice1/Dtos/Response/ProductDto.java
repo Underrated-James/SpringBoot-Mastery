@@ -1,4 +1,4 @@
-package com.example.Practice1.Dtos;
+package com.example.Practice1.Dtos.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

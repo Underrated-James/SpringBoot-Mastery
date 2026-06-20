@@ -1,8 +1,7 @@
-package com.example.Practice1.Dtos;
+package com.example.Practice1.Dtos.Response;
 
 import com.example.Practice1.Entities.Product;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

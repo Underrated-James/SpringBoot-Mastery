@@ -1,6 +1,6 @@
 package com.example.Practice1.Mappers;
 
-import com.example.Practice1.Dtos.ProfileDto;
+import com.example.Practice1.Dtos.Response.ProfileDto;
 import com.example.Practice1.Dtos.Request.ProfileRequestDto;
 import com.example.Practice1.Entities.Profile;
 import org.mapstruct.Mapper;

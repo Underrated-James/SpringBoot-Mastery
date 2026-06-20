@@ -1,8 +1,9 @@
 package com.example.Practice1.Controllers;
 
 
+import com.example.Practice1.Dtos.Request.UpdateDtos.UserUpdateDto;
 import com.example.Practice1.Dtos.Request.UserRequestDto;
-import com.example.Practice1.Dtos.UserDto;
+import com.example.Practice1.Dtos.Response.UserDto;
 import com.example.Practice1.Mappers.UserMapper;
 import com.example.Practice1.Repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -67,6 +68,25 @@ public class UserController {
         var uri = uriComponentsBuilder.path("/users/{id}").buildAndExpand(userDto.getId()).toUri();
 
         return ResponseEntity.created(uri).body(userDto);
+
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(
+            @PathVariable(name = "id")Long id,
+            @RequestBody UserUpdateDto request
+            ){
+        var user = userRepository.findById(id).orElse(null);
+
+        if(user == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        userMapper.update(request, user);
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok(userMapper.toDto(user));
 
     }
 

@@ -730,3 +730,7 @@
 2026-06-20 15:58:21.510 +08 [6852] LOG:  checkpoint starting: end-of-recovery immediate wait
 2026-06-20 15:58:21.529 +08 [6852] LOG:  checkpoint complete: wrote 3 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.007 s, total=0.022 s; sync files=5, longest=0.002 s, average=0.002 s; distance=3 kB, estimate=3 kB; lsn=0/2349A78, redo lsn=0/2349A78
 2026-06-20 15:58:21.538 +08 [22520] LOG:  database system is ready to accept connections
+2026-06-20 16:03:21.542 +08 [6852] LOG:  checkpoint starting: time
+2026-06-20 16:03:22.035 +08 [6852] LOG:  checkpoint complete: wrote 4 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.450 s, sync=0.010 s, total=0.496 s; sync files=5, longest=0.003 s, average=0.002 s; distance=3 kB, estimate=3 kB; lsn=0/234A760, redo lsn=0/234A708
+2026-06-20 16:28:21.082 +08 [6852] LOG:  checkpoint starting: time
+2026-06-20 16:28:21.235 +08 [6852] LOG:  checkpoint complete: wrote 1 buffers (0.0%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.118 s, sync=0.007 s, total=0.158 s; sync files=2, longest=0.004 s, average=0.004 s; distance=1 kB, estimate=3 kB; lsn=0/234AE18, redo lsn=0/234ADC0
