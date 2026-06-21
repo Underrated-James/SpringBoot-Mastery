@@ -25,6 +25,12 @@ public class Category {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "num_of_products")
+    private String num_of_products;
+
     @OneToMany(mappedBy = "category")
     @JsonIgnoreProperties("category")
     private Set<Product> products = new HashSet<>();

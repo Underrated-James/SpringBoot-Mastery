@@ -7,9 +7,9 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
-    @Mapping(source = "seller.id", target = "sellerId")
+    @Mapping(target = "sellerId", expression = "java(product.getSeller() == null || product.getSeller().getId() == null ? null : product.getSeller().getId())")
 
-    @Mapping(source = "category.id", target = "categoryId")
+    @Mapping(target = "categoryId", expression = "java(product.getCategory() == null || product.getCategory().getId() == null ? null : product.getCategory().getId().longValue())")
 
     @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
     ProductDto toDto(Product product);
