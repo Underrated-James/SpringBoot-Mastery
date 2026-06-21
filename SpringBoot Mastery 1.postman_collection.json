@@ -1,0 +1,1981 @@
+{
+  "info": {
+    "_postman_id": "fbf446a1-1127-4b2b-b581-03d85a1723f2",
+    "name": "SpringBoot Mastery 1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51383056",
+    "_collection_link": "https://go.postman.co/collection/51383056-fbf446a1-1127-4b2b-b581-03d85a1723f2?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "TC-ADM-USER 1.0 Success List of All Users",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// 1. SET UP REQUEST TIMING LOGS\r",
+                  "pm.info.eventName === \"prerequest\" ? console.log(\"--- Starting API Request Pipeline ---\") : null;\r",
+                  "\r",
+                  "// 2. OPTIONAL: DYNAMIC VARIABLE GENERATION\r",
+                  "// If you ever need a random email template for testing automated inserts later:\r",
+                  "const randomId = Math.floor(Math.random() * 1000);\r",
+                  "pm.variables.set(\"mockGeneratedEmail\", `testuser${randomId}@example.com`);\r",
+                  "\r",
+                  "console.log(`Pre-request setup complete. Target URL: ${pm.request.url.toString()}`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. HTTP STATUS & PERFORMANCE\r",
+                  "pm.test(\"Status code is 200 OK\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is healthy (under 500ms)\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "const responseData = pm.response.json();\r",
+                  "\r",
+                  "// 2. ROOT STRUCTURE VALIDATION\r",
+                  "pm.test(\"Response is a valid JSON Array\", function () {\r",
+                  "    pm.expect(responseData).to.be.an('array');\r",
+                  "});\r",
+                  "\r",
+                  "// 3. DYNAMIC SCHEMA & TYPE VALIDATION\r",
+                  "pm.test(\"Validate Schema for every User object in the list\", function () {\r",
+                  "    if (responseData.length > 0) {\r",
+                  "        responseData.forEach((user) => {\r",
+                  "            // Validate Core User Structure\r",
+                  "            pm.expect(user).to.have.property('user_id').that.is.a('number'); // Matches your JSON key \"user_id\"\r",
+                  "            pm.expect(user).to.have.property('name').that.is.a('string');\r",
+                  "            pm.expect(user).to.have.property('email').that.is.a('string');\r",
+                  "            \r",
+                  "            pm.expect(user).to.have.property('address');\r",
+                  "            if (user.address !== null) {\r",
+                  "                pm.expect(user.address).to.be.an('array');\r",
+                  "            }\r",
+                  "\r",
+                  "            pm.expect(user).to.have.property('profile');\r",
+                  "            if (user.profile !== null) {\r",
+                  "                pm.expect(user.profile).to.be.an('object');\r",
+                  "                // 🌟 Fixed: Your JSON profile object uses \"id\", not \"user_user_id\"\r",
+                  "                pm.expect(user.profile).to.have.property('id').that.is.a('number');\r",
+                  "                pm.expect(user.profile).to.have.property('bio').that.is.a('string'); \r",
+                  "                pm.expect(user.profile).to.have.property('phoneNumber').that.is.a('string');\r",
+                  "                pm.expect(user.profile).to.have.property('dateOfBirth').that.is.a('string');\r",
+                  "                pm.expect(user.profile).to.have.property('loyaltyPoints').that.is.a('number');\r",
+                  "                pm.expect(user.profile).to.have.property('habbits').that.is.a('string');\r",
+                  "            }\r",
+                  "\r",
+                  "            if (user.address !== null && user.address.length > 0) {\r",
+                  "                user.address.forEach((addr) => {\r",
+                  "                    // 🌟 Fixed: Address items inside the array use \"id\" as their primary key\r",
+                  "                    pm.expect(addr).to.have.property('id').that.is.a('number');\r",
+                  "                    pm.expect(addr).to.have.property('street').that.is.a('string');\r",
+                  "                    pm.expect(addr).to.have.property('city').that.is.a('string');\r",
+                  "                    pm.expect(addr).to.have.property('zip').that.is.a('string');\r",
+                  "                    pm.expect(addr).to.have.property('state').that.is.a('string');\r",
+                  "                    pm.expect(addr).to.have.property('country');\r",
+                  "                });\r",
+                  "            }\r",
+                  "        });\r",
+                  "    } else {\r",
+                  "        console.warn(\"The database returned an empty list. Skipping structure loops.\");\r",
+                  "    }\r",
+                  "});\r",
+                  "\r",
+                  "// 4. BUSINESS LOGIC REASONABILITY CHECKS\r",
+                  "pm.test(\"Ensure primary keys are valid sequential or non-zero IDs\", function () {\r",
+                  "    if (responseData.length > 0) {\r",
+                  "        responseData.forEach((user) => {\r",
+                  "            pm.expect(user.user_id).to.be.greaterThan(0);\r",
+                  "            if (user.profile) {\r",
+                  "                // 🌟 Fixed: Corrected property access name back to user.profile.id\r",
+                  "                pm.expect(user.profile.id).to.be.greaterThan(0);\r",
+                  "            }\r",
+                  "        });\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/users",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ADM-USER 2.0 Success Create User",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Generate a random suffix for a unique email\r",
+                  "const randomId = Math.floor(Math.random() * 10000);\r",
+                  "const uniqueEmail = `chQuinay+${randomId}@gmail.com`;\r",
+                  "\r",
+                  "// Set variables for the request body\r",
+                  "pm.variables.set(\"register_name\", \"Christopher Quinay\");\r",
+                  "pm.variables.set(\"register_email\", uniqueEmail);\r",
+                  "pm.variables.set(\"register_password\", \"!Passw0rd123\");\r",
+                  "\r",
+                  "console.log(`Pre-request: Registering user with email ${uniqueEmail}`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. Verify successful creation status code (201 Created)\r",
+                  "pm.test(\"Status code is 201 (Created)\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "// 2. Verify API performance (Response time should be faster than 500ms)\r",
+                  "pm.test(\"Response time is acceptable (under 500ms)\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "// 3. Verify Response Headers\r",
+                  "pm.test(\"Response headers include Content-Type application/json\", function () {\r",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                  "});\r",
+                  "\r",
+                  "// 4. Parse and validate the response payload\r",
+                  "pm.test(\"Response body matches the newly created user schema\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "    \r",
+                  "    // Assert critical properties exist and check their precise data types\r",
+                  "    pm.expect(jsonData).to.have.property(\"user_id\").and.to.be.a(\"number\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"createdAt\").and.to.be.a(\"string\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"password\").and.to.be.a(\"string\");\r",
+                  "    \r",
+                  "    // Verify values match what we sent (fallback to your string literals if variables aren't used)\r",
+                  "    const expectedName = pm.variables.get(\"register_name\") || \"Christopher Quinay\";\r",
+                  "    const expectedEmail = pm.variables.get(\"register_email\") || \"chQuinay@gmail.com\";\r",
+                  "    \r",
+                  "    pm.expect(jsonData.name).to.eql(expectedName);\r",
+                  "    pm.expect(jsonData.email).to.eql(expectedEmail);\r",
+                  "    \r",
+                  "    // Validate Profile Structure\r",
+                  "    pm.expect(jsonData).to.have.property(\"profile\");\r",
+                  "    pm.expect(jsonData.profile).to.be.null;\r",
+                  "    \r",
+                  "    // Strict Validation for Addresses Array\r",
+                  "    pm.expect(jsonData).to.have.property(\"addresses\");\r",
+                  "    pm.expect(jsonData.addresses).to.be.an(\"array\"); // Ensures it's an array type\r",
+                  "    pm.expect(jsonData.addresses).to.be.empty;        // Ensures the array has a length of 0\r",
+                  "    \r",
+                  "    // Validate Date Format (YYYY-MM-DD HH:MM:SS) using Regex match\r",
+                  "    const dateRegex = /^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/;\r",
+                  "    pm.test(\"createdAt date format matches YYYY-MM-DD HH:mm:ss\", function() {\r",
+                  "        pm.expect(jsonData.createdAt).to.match(dateRegex);\r",
+                  "    });\r",
+                  "\r",
+                  "    // 5. Environment Variable Extraction\r",
+                  "    if (jsonData.user_id) {\r",
+                  "        pm.environment.set(\"current_user_id\", jsonData.user_id);\r",
+                  "        console.log(`Saved user_id ${jsonData.user_id} to Environment.`);\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{register_name}}\",\r\n    \"email\": \"{{register_email}}\",\r\n    \"password\": \"{{register_password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/users",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ADM-USER 2.0 Success  Put User",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// // Generate a random suffix for a unique email\r",
+                  "// const randomId = Math.floor(Math.random() * 10000);\r",
+                  "// const uniqueEmail = `chQuinay+${randomId}@gmail.com`;\r",
+                  "\r",
+                  "// // Set variables for the request body\r",
+                  "// pm.variables.set(\"register_name\", \"Christopher Quinay\");\r",
+                  "// pm.variables.set(\"register_email\", uniqueEmail);\r",
+                  "// pm.variables.set(\"register_password\", \"!Passw0rd123\");\r",
+                  "\r",
+                  "// console.log(`Pre-request: Registering user with email ${uniqueEmail}`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// // 1. Verify successful creation status code (201 Created)\r",
+                  "// pm.test(\"Status code is 201 (Created)\", function () {\r",
+                  "//     pm.response.to.have.status(201);\r",
+                  "// });\r",
+                  "\r",
+                  "// // 2. Verify API performance (Response time should be faster than 500ms)\r",
+                  "// pm.test(\"Response time is acceptable (under 500ms)\", function () {\r",
+                  "//     pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "// });\r",
+                  "\r",
+                  "// // 3. Verify Response Headers\r",
+                  "// pm.test(\"Response headers include Content-Type application/json\", function () {\r",
+                  "//     pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                  "// });\r",
+                  "\r",
+                  "// // 4. Parse and validate the response payload\r",
+                  "// pm.test(\"Response body matches the newly created user schema\", function () {\r",
+                  "//     const jsonData = pm.response.json();\r",
+                  "    \r",
+                  "//     // Assert critical properties exist and check their precise data types\r",
+                  "//     pm.expect(jsonData).to.have.property(\"user_id\").and.to.be.a(\"number\");\r",
+                  "//     pm.expect(jsonData).to.have.property(\"createdAt\").and.to.be.a(\"string\");\r",
+                  "//     pm.expect(jsonData).to.have.property(\"password\").and.to.be.a(\"string\");\r",
+                  "    \r",
+                  "//     // Verify values match what we sent (fallback to your string literals if variables aren't used)\r",
+                  "//     const expectedName = pm.variables.get(\"register_name\") || \"Christopher Quinay\";\r",
+                  "//     const expectedEmail = pm.variables.get(\"register_email\") || \"chQuinay@gmail.com\";\r",
+                  "    \r",
+                  "//     pm.expect(jsonData.name).to.eql(expectedName);\r",
+                  "//     pm.expect(jsonData.email).to.eql(expectedEmail);\r",
+                  "    \r",
+                  "//     // Validate Profile Structure\r",
+                  "//     pm.expect(jsonData).to.have.property(\"profile\");\r",
+                  "//     pm.expect(jsonData.profile).to.be.null;\r",
+                  "    \r",
+                  "//     // Strict Validation for Addresses Array\r",
+                  "//     pm.expect(jsonData).to.have.property(\"addresses\");\r",
+                  "//     pm.expect(jsonData.addresses).to.be.an(\"array\"); // Ensures it's an array type\r",
+                  "//     pm.expect(jsonData.addresses).to.be.empty;        // Ensures the array has a length of 0\r",
+                  "    \r",
+                  "//     // Validate Date Format (YYYY-MM-DD HH:MM:SS) using Regex match\r",
+                  "//     const dateRegex = /^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/;\r",
+                  "//     pm.test(\"createdAt date format matches YYYY-MM-DD HH:mm:ss\", function() {\r",
+                  "//         pm.expect(jsonData.createdAt).to.match(dateRegex);\r",
+                  "//     });\r",
+                  "\r",
+                  "//     // 5. Environment Variable Extraction\r",
+                  "//     if (jsonData.user_id) {\r",
+                  "//         pm.environment.set(\"current_user_id\", jsonData.user_id);\r",
+                  "//         console.log(`Saved user_id ${jsonData.user_id} to Environment.`);\r",
+                  "//     }\r",
+                  "// });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{register_name}}\",\r\n    \"email\": \"{{register_email}}\",\r\n    \"password\": \"{{register_password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/users",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ADM-USER 2.0 Success Delete User",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// // Generate a random suffix for a unique email\r",
+                  "// const randomId = Math.floor(Math.random() * 10000);\r",
+                  "// const uniqueEmail = `chQuinay+${randomId}@gmail.com`;\r",
+                  "\r",
+                  "// // Set variables for the request body\r",
+                  "// pm.variables.set(\"register_name\", \"Christopher Quinay\");\r",
+                  "// pm.variables.set(\"register_email\", uniqueEmail);\r",
+                  "// pm.variables.set(\"register_password\", \"!Passw0rd123\");\r",
+                  "\r",
+                  "// console.log(`Pre-request: Registering user with email ${uniqueEmail}`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// // 1. Verify successful creation status code (201 Created)\r",
+                  "// pm.test(\"Status code is 201 (Created)\", function () {\r",
+                  "//     pm.response.to.have.status(201);\r",
+                  "// });\r",
+                  "\r",
+                  "// // 2. Verify API performance (Response time should be faster than 500ms)\r",
+                  "// pm.test(\"Response time is acceptable (under 500ms)\", function () {\r",
+                  "//     pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "// });\r",
+                  "\r",
+                  "// // 3. Verify Response Headers\r",
+                  "// pm.test(\"Response headers include Content-Type application/json\", function () {\r",
+                  "//     pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                  "// });\r",
+                  "\r",
+                  "// // 4. Parse and validate the response payload\r",
+                  "// pm.test(\"Response body matches the newly created user schema\", function () {\r",
+                  "//     const jsonData = pm.response.json();\r",
+                  "    \r",
+                  "//     // Assert critical properties exist and check their precise data types\r",
+                  "//     pm.expect(jsonData).to.have.property(\"user_id\").and.to.be.a(\"number\");\r",
+                  "//     pm.expect(jsonData).to.have.property(\"createdAt\").and.to.be.a(\"string\");\r",
+                  "//     pm.expect(jsonData).to.have.property(\"password\").and.to.be.a(\"string\");\r",
+                  "    \r",
+                  "//     // Verify values match what we sent (fallback to your string literals if variables aren't used)\r",
+                  "//     const expectedName = pm.variables.get(\"register_name\") || \"Christopher Quinay\";\r",
+                  "//     const expectedEmail = pm.variables.get(\"register_email\") || \"chQuinay@gmail.com\";\r",
+                  "    \r",
+                  "//     pm.expect(jsonData.name).to.eql(expectedName);\r",
+                  "//     pm.expect(jsonData.email).to.eql(expectedEmail);\r",
+                  "    \r",
+                  "//     // Validate Profile Structure\r",
+                  "//     pm.expect(jsonData).to.have.property(\"profile\");\r",
+                  "//     pm.expect(jsonData.profile).to.be.null;\r",
+                  "    \r",
+                  "//     // Strict Validation for Addresses Array\r",
+                  "//     pm.expect(jsonData).to.have.property(\"addresses\");\r",
+                  "//     pm.expect(jsonData.addresses).to.be.an(\"array\"); // Ensures it's an array type\r",
+                  "//     pm.expect(jsonData.addresses).to.be.empty;        // Ensures the array has a length of 0\r",
+                  "    \r",
+                  "//     // Validate Date Format (YYYY-MM-DD HH:MM:SS) using Regex match\r",
+                  "//     const dateRegex = /^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/;\r",
+                  "//     pm.test(\"createdAt date format matches YYYY-MM-DD HH:mm:ss\", function() {\r",
+                  "//         pm.expect(jsonData.createdAt).to.match(dateRegex);\r",
+                  "//     });\r",
+                  "\r",
+                  "//     // 5. Environment Variable Extraction\r",
+                  "//     if (jsonData.user_id) {\r",
+                  "//         pm.environment.set(\"current_user_id\", jsonData.user_id);\r",
+                  "//         console.log(`Saved user_id ${jsonData.user_id} to Environment.`);\r",
+                  "//     }\r",
+                  "// });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{register_name}}\",\r\n    \"email\": \"{{register_email}}\",\r\n    \"password\": \"{{register_password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/users",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Seller",
+      "item": [
+        {
+          "name": "TC-ADM-SELLER 1.0 Success List of All Sellers",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// 1. Set default sorting and filtering variables for the endpoint\r",
+                  "pm.variables.set(\"sortBy\", \"name\"); // Sort by seller name, storeName, etc.\r",
+                  "pm.variables.set(\"direction\", \"asc\");\r",
+                  "\r",
+                  "// 2. Optional: Log the upcoming action for debugging\r",
+                  "console.log(`[PRE-REQUEST] Fetching sellers sorted by: ${pm.variables.get(\"sortBy\")} (${pm.variables.get(\"direction\")})`);\r",
+                  "\r",
+                  "// 3. Clear any dynamic variables from previous test runs to prevent state pollution\r",
+                  "pm.environment.unset(\"firstSellerId\");\r",
+                  "pm.environment.unset(\"firstProductId\");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. Status Code Validation\r",
+                  "pm.test(\"Status code is 200 OK\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "// 2. Response Time Check (Good for performance tracking)\r",
+                  "pm.test(\"Response time is less than 500ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "// 3. Structure & Data Validations\r",
+                  "pm.test(\"Response is a valid Seller array\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "    \r",
+                  "    // Ensure it's an array and not empty\r",
+                  "    pm.expect(jsonData).to.be.an('array');\r",
+                  "    pm.expect(jsonData.length).to.be.at.least(1);\r",
+                  "\r",
+                  "    // Validate the first seller's core properties\r",
+                  "    const firstSeller = jsonData[0];\r",
+                  "    pm.expect(firstSeller).to.have.property('id');\r",
+                  "    pm.expect(firstSeller).to.have.property('name');\r",
+                  "    pm.expect(firstSeller).to.have.property('storeName');\r",
+                  "    pm.expect(firstSeller.products).to.be.an('array');\r",
+                  "\r",
+                  "    // Extract and environment-store Seller ID for next API calls (e.g., GET /sellers/{id})\r",
+                  "    pm.environment.set(\"firstSellerId\", firstSeller.id);\r",
+                  "    console.log(`[POST-RESPONSE] Saved seller ID: ${firstSeller.id}`);\r",
+                  "\r",
+                  "    // 4. Nested Products Validation (If products exist)\r",
+                  "    if (firstSeller.products.length > 0) {\r",
+                  "        const firstProduct = firstSeller.products[0];\r",
+                  "        \r",
+                  "        pm.test(\"Product structure is valid\", function () {\r",
+                  "            pm.expect(firstProduct).to.have.property('id');\r",
+                  "            pm.expect(firstProduct).to.have.property('name');\r",
+                  "            pm.expect(firstProduct).to.have.property('price');\r",
+                  "            pm.expect(firstProduct).to.have.property('category');\r",
+                  "            pm.expect(firstProduct.category).to.have.property('name');\r",
+                  "        });\r",
+                  "\r",
+                  "        // Extract and environment-store Product ID for next API calls (e.g., PUT /products/{id})\r",
+                  "        pm.environment.set(\"firstProductId\", firstProduct.id);\r",
+                  "        console.log(`[POST-RESPONSE] Saved product ID: ${firstProduct.id}`);\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/sellers",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "sellers"
+              ],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "storeName",
+                  "disabled": true
+                },
+                {
+                  "key": "sort",
+                  "value": "name",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ADM-SELLER 1.0 Success List of All Sellers",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Check if variables exist; if not, generate dynamic default values\r",
+                  "const uniqueId = Math.floor(Math.random() * 1000);\r",
+                  "\r",
+                  "if (!pm.variables.get(\"register_name\")) {\r",
+                  "    pm.variables.set(\"register_name\", \"Kristine Reyes\");\r",
+                  "}\r",
+                  "if (!pm.variables.get(\"register_location\")) {\r",
+                  "    pm.variables.set(\"register_location\", \"Cabuyao City\");\r",
+                  "}\r",
+                  "if (!pm.variables.get(\"register_storeName\")) {\r",
+                  "    pm.variables.set(\"register_storeName\", `Generic Pharmacy ${uniqueId}`);\r",
+                  "}\r",
+                  "\r",
+                  "console.log(\"Pre-request: Seller variables initialized.\");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. Verify successful creation status code (201 Created)\r",
+                  "pm.test(\"Status code is 201 (Created)\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "// 2. Verify API performance (Response time under 500ms)\r",
+                  "pm.test(\"Response time is healthy (under 500ms)\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "// 3. Verify Response Headers\r",
+                  "pm.test(\"Response is JSON format\", function () {\r",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                  "});\r",
+                  "\r",
+                  "// 4. Parse and validate the response payload\r",
+                  "pm.test(\"Response body matches the newly created seller schema\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "    \r",
+                  "    // Assert structural properties exist and check data types\r",
+                  "    pm.expect(jsonData).to.have.property(\"id\").and.to.be.a(\"number\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"createdAt\").and.to.be.a(\"string\");\r",
+                  "    \r",
+                  "    // Verify values match what we sent via variables\r",
+                  "    pm.expect(jsonData.name).to.eql(pm.variables.get(\"register_name\"));\r",
+                  "    pm.expect(jsonData.storeName).to.eql(pm.variables.get(\"register_storeName\"));\r",
+                  "    \r",
+                  "    // Strict Validation for Products Array\r",
+                  "    pm.expect(jsonData).to.have.property(\"products\");\r",
+                  "    pm.expect(jsonData.products).to.be.an(\"array\"); // Type check\r",
+                  "    pm.expect(jsonData.products).to.be.empty;        // Relationship is initially empty\r",
+                  "    \r",
+                  "    // Validate Date Format (YYYY-MM-DD HH:MM:SS) using Regex\r",
+                  "    const dateRegex = /^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/;\r",
+                  "    pm.expect(jsonData.createdAt).to.match(dateRegex);\r",
+                  "\r",
+                  "    // 5. Save the generated Seller ID for subsequent API tests (e.g., GET /sellers/:id)\r",
+                  "    if (jsonData.id) {\r",
+                  "        pm.environment.set(\"current_seller_id\", jsonData.id);\r",
+                  "        console.log(`Saved seller_id ${jsonData.id} to Environment.`);\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{register_name}}\",\r\n    \"location\": \"{{register_location}}\",\r\n    \"storeName\": \"{{register_storeName}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/sellers",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "sellers"
+              ],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "storeName",
+                  "disabled": true
+                },
+                {
+                  "key": "sort",
+                  "value": "name",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ADM-SELLER 2.0 Success Create Seller",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// // Generate a random suffix for a unique email\r",
+                  "// const randomId = Math.floor(Math.random() * 10000);\r",
+                  "// const uniqueEmail = `chQuinay+${randomId}@gmail.com`;\r",
+                  "\r",
+                  "// // Set variables for the request body\r",
+                  "// pm.variables.set(\"register_name\", \"Christopher Quinay\");\r",
+                  "// pm.variables.set(\"register_email\", uniqueEmail);\r",
+                  "// pm.variables.set(\"register_password\", \"!Passw0rd123\");\r",
+                  "\r",
+                  "// console.log(`Pre-request: Registering user with email ${uniqueEmail}`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// // 1. Verify successful creation status code (201 Created)\r",
+                  "// pm.test(\"Status code is 201 (Created)\", function () {\r",
+                  "//     pm.response.to.have.status(201);\r",
+                  "// });\r",
+                  "\r",
+                  "// // 2. Verify API performance (Response time should be faster than 500ms)\r",
+                  "// pm.test(\"Response time is acceptable (under 500ms)\", function () {\r",
+                  "//     pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "// });\r",
+                  "\r",
+                  "// // 3. Verify Response Headers\r",
+                  "// pm.test(\"Response headers include Content-Type application/json\", function () {\r",
+                  "//     pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                  "// });\r",
+                  "\r",
+                  "// // 4. Parse and validate the response payload\r",
+                  "// pm.test(\"Response body matches the newly created user schema\", function () {\r",
+                  "//     const jsonData = pm.response.json();\r",
+                  "    \r",
+                  "//     // Assert critical properties exist and check their precise data types\r",
+                  "//     pm.expect(jsonData).to.have.property(\"user_id\").and.to.be.a(\"number\");\r",
+                  "//     pm.expect(jsonData).to.have.property(\"createdAt\").and.to.be.a(\"string\");\r",
+                  "//     pm.expect(jsonData).to.have.property(\"password\").and.to.be.a(\"string\");\r",
+                  "    \r",
+                  "//     // Verify values match what we sent (fallback to your string literals if variables aren't used)\r",
+                  "//     const expectedName = pm.variables.get(\"register_name\") || \"Christopher Quinay\";\r",
+                  "//     const expectedEmail = pm.variables.get(\"register_email\") || \"chQuinay@gmail.com\";\r",
+                  "    \r",
+                  "//     pm.expect(jsonData.name).to.eql(expectedName);\r",
+                  "//     pm.expect(jsonData.email).to.eql(expectedEmail);\r",
+                  "    \r",
+                  "//     // Validate Profile Structure\r",
+                  "//     pm.expect(jsonData).to.have.property(\"profile\");\r",
+                  "//     pm.expect(jsonData.profile).to.be.null;\r",
+                  "    \r",
+                  "//     // Strict Validation for Addresses Array\r",
+                  "//     pm.expect(jsonData).to.have.property(\"addresses\");\r",
+                  "//     pm.expect(jsonData.addresses).to.be.an(\"array\"); // Ensures it's an array type\r",
+                  "//     pm.expect(jsonData.addresses).to.be.empty;        // Ensures the array has a length of 0\r",
+                  "    \r",
+                  "//     // Validate Date Format (YYYY-MM-DD HH:MM:SS) using Regex match\r",
+                  "//     const dateRegex = /^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/;\r",
+                  "//     pm.test(\"createdAt date format matches YYYY-MM-DD HH:mm:ss\", function() {\r",
+                  "//         pm.expect(jsonData.createdAt).to.match(dateRegex);\r",
+                  "//     });\r",
+                  "\r",
+                  "//     // 5. Environment Variable Extraction\r",
+                  "//     if (jsonData.user_id) {\r",
+                  "//         pm.environment.set(\"current_user_id\", jsonData.user_id);\r",
+                  "//         console.log(`Saved user_id ${jsonData.user_id} to Environment.`);\r",
+                  "//     }\r",
+                  "// });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{register_name}}\",\r\n    \"email\": \"{{register_email}}\",\r\n    \"password\": \"{{register_password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/users",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ADM-SELLER 2.0 Success Delete Seller",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// // Generate a random suffix for a unique email\r",
+                  "// const randomId = Math.floor(Math.random() * 10000);\r",
+                  "// const uniqueEmail = `chQuinay+${randomId}@gmail.com`;\r",
+                  "\r",
+                  "// // Set variables for the request body\r",
+                  "// pm.variables.set(\"register_name\", \"Christopher Quinay\");\r",
+                  "// pm.variables.set(\"register_email\", uniqueEmail);\r",
+                  "// pm.variables.set(\"register_password\", \"!Passw0rd123\");\r",
+                  "\r",
+                  "// console.log(`Pre-request: Registering user with email ${uniqueEmail}`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// // 1. Verify successful creation status code (201 Created)\r",
+                  "// pm.test(\"Status code is 201 (Created)\", function () {\r",
+                  "//     pm.response.to.have.status(201);\r",
+                  "// });\r",
+                  "\r",
+                  "// // 2. Verify API performance (Response time should be faster than 500ms)\r",
+                  "// pm.test(\"Response time is acceptable (under 500ms)\", function () {\r",
+                  "//     pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "// });\r",
+                  "\r",
+                  "// // 3. Verify Response Headers\r",
+                  "// pm.test(\"Response headers include Content-Type application/json\", function () {\r",
+                  "//     pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                  "// });\r",
+                  "\r",
+                  "// // 4. Parse and validate the response payload\r",
+                  "// pm.test(\"Response body matches the newly created user schema\", function () {\r",
+                  "//     const jsonData = pm.response.json();\r",
+                  "    \r",
+                  "//     // Assert critical properties exist and check their precise data types\r",
+                  "//     pm.expect(jsonData).to.have.property(\"user_id\").and.to.be.a(\"number\");\r",
+                  "//     pm.expect(jsonData).to.have.property(\"createdAt\").and.to.be.a(\"string\");\r",
+                  "//     pm.expect(jsonData).to.have.property(\"password\").and.to.be.a(\"string\");\r",
+                  "    \r",
+                  "//     // Verify values match what we sent (fallback to your string literals if variables aren't used)\r",
+                  "//     const expectedName = pm.variables.get(\"register_name\") || \"Christopher Quinay\";\r",
+                  "//     const expectedEmail = pm.variables.get(\"register_email\") || \"chQuinay@gmail.com\";\r",
+                  "    \r",
+                  "//     pm.expect(jsonData.name).to.eql(expectedName);\r",
+                  "//     pm.expect(jsonData.email).to.eql(expectedEmail);\r",
+                  "    \r",
+                  "//     // Validate Profile Structure\r",
+                  "//     pm.expect(jsonData).to.have.property(\"profile\");\r",
+                  "//     pm.expect(jsonData.profile).to.be.null;\r",
+                  "    \r",
+                  "//     // Strict Validation for Addresses Array\r",
+                  "//     pm.expect(jsonData).to.have.property(\"addresses\");\r",
+                  "//     pm.expect(jsonData.addresses).to.be.an(\"array\"); // Ensures it's an array type\r",
+                  "//     pm.expect(jsonData.addresses).to.be.empty;        // Ensures the array has a length of 0\r",
+                  "    \r",
+                  "//     // Validate Date Format (YYYY-MM-DD HH:MM:SS) using Regex match\r",
+                  "//     const dateRegex = /^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/;\r",
+                  "//     pm.test(\"createdAt date format matches YYYY-MM-DD HH:mm:ss\", function() {\r",
+                  "//         pm.expect(jsonData.createdAt).to.match(dateRegex);\r",
+                  "//     });\r",
+                  "\r",
+                  "//     // 5. Environment Variable Extraction\r",
+                  "//     if (jsonData.user_id) {\r",
+                  "//         pm.environment.set(\"current_user_id\", jsonData.user_id);\r",
+                  "//         console.log(`Saved user_id ${jsonData.user_id} to Environment.`);\r",
+                  "//     }\r",
+                  "// });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{register_name}}\",\r\n    \"email\": \"{{register_email}}\",\r\n    \"password\": \"{{register_password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/users",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Address",
+      "item": [
+        {
+          "name": "TC-ADM-ADDRESS 1.0 Success List of All Address",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// 1. PIPELINE TIMING MARKER\r",
+                  "console.log(\"--- Starting Address API Request ---\");\r",
+                  "pm.variables.set(\"requestStartTime\", Date.now());\r",
+                  "\r",
+                  "// 2. OPTIONAL: MOCK DATA GENERATOR FOR NEW ADDRESS ENTRIES\r",
+                  "// Useful later if you change this request to a POST to save addresses dynamically\r",
+                  "const sampleZipCodes = [\"4025\", \"4026\", \"4000\", \"1000\"];\r",
+                  "const randomZip = sampleZipCodes[Math.floor(Math.random() * sampleZipCodes.length)];\r",
+                  "pm.variables.set(\"mockZipCode\", randomZip);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. STATUS & PERFORMANCE CHECKS\r",
+                  "pm.test(\"Status code is 200 OK\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is within optimal range (under 400ms)\", function () {\r",
+                  "    const startTime = pm.variables.get(\"requestStartTime\");\r",
+                  "    if (startTime) {\r",
+                  "        const totalDuration = Date.now() - startTime;\r",
+                  "        console.log(`Total execution pipeline took: ${totalDuration}ms`);\r",
+                  "    }\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+                  "}); // 🌟 FIXED: Added missing closing curly brace and parenthesis here\r",
+                  "\r",
+                  "// Parse the address JSON array payload\r",
+                  "const responseData = pm.response.json();\r",
+                  "\r",
+                  "// 2. BASE STRUCTURAL VALIDATION\r",
+                  "pm.test(\"Response layout is a valid JSON Array\", function () {\r",
+                  "    pm.expect(responseData).to.be.an('array');\r",
+                  "});\r",
+                  "\r",
+                  "// 3. SCHEMA & DATA TYPE ENFORCEMENT\r",
+                  "pm.test(\"Validate structural types for every Address item\", function () {\r",
+                  "    if (responseData.length > 0) {\r",
+                  "        responseData.forEach((address, index) => {\r",
+                  "            // Verify structural keys exist and hold correct primitive types\r",
+                  "            pm.expect(address).to.have.property('address_id').that.is.a('number');\r",
+                  "            pm.expect(address).to.have.property('street').that.is.a('string');\r",
+                  "            pm.expect(address).to.have.property('city').that.is.a('string');\r",
+                  "            pm.expect(address).to.have.property('state').that.is.a('string');\r",
+                  "            \r",
+                  "            // Country is nullable, so we check that the key exists without forcing a string match\r",
+                  "            pm.expect(address).to.have.property('country'); \r",
+                  "            if (address.country !== null) {\r",
+                  "                pm.expect(address.country).to.be.a('string');\r",
+                  "            }\r",
+                  "\r",
+                  "            // Verify foreign key reference links correctly to a parent User\r",
+                  "            pm.expect(address).to.have.property('userId').that.is.a('number');\r",
+                  "        });\r",
+                  "    } else {\r",
+                  "        console.warn(\"Address table returned empty array dataset.\");\r",
+                  "    }\r",
+                  "});\r",
+                  "\r",
+                  "// 4. LOGICAL DATABASE RULES\r",
+                  "pm.test(\"Validate that primary and foreign keys contain logical positive values\", function () {\r",
+                  "    if (responseData.length > 0) {\r",
+                  "        responseData.forEach((address) => {\r",
+                  "            // 🌟 FIXED: Changed address.id to address.address_id to match your JSON data payload layout\r",
+                  "            pm.expect(address.address_id).to.be.greaterThan(0);\r",
+                  "            pm.expect(address.userId).to.be.greaterThan(0);\r",
+                  "        });\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localDev}}/address",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "address"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "TC-ADM-PROFILES 1.0 Success List of All Profiles",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// 1. LATENCY TIMING ANCHOR\r",
+                  "console.log(\"--- Executing Profiles Endpoint Lifecycle ---\");\r",
+                  "pm.variables.set(\"profileExecutionStamp\", Date.now());\r",
+                  "\r",
+                  "// 2. OPTIONAL: MOCK TEXT GENERATOR FOR NEW BIO ENTRIES\r",
+                  "// Useful if you decide to change this route to a POST request to create profiles automatically\r",
+                  "const careerGlowUps = [\r",
+                  "    \"Aspiring Java Engineer to Accenture\", \r",
+                  "    \"Full-Stack Developer learning Spring Boot\", \r",
+                  "    \"Backend Specialist focused on Hibernate architecture\"\r",
+                  "];\r",
+                  "const randomBioSelection = careerGlowUps[Math.floor(Math.random() * careerGlowUps.length)];\r",
+                  "\r",
+                  "// Save the randomized text into a dynamic Postman context variable\r",
+                  "pm.variables.set(\"mockGeneratedBio\", randomBioSelection);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. CONNECTION & PERFORMANCE ASSERTIONS\r",
+                  "pm.test(\"Status code returns 200 OK\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Server response overhead time is safe (under 450ms)\", function () {\r",
+                  "    const startPoint = pm.variables.get(\"profileExecutionStamp\");\r",
+                  "    if (startPoint) {\r",
+                  "        console.log(`Internal pipeline processing took: ${Date.now() - startPoint}ms`);\r",
+                  "    }\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(450);\r",
+                  "});\r",
+                  "\r",
+                  "// Capture raw payload response body\r",
+                  "const responseData = pm.response.json();\r",
+                  "\r",
+                  "// 2. LAYER-ONE SCHEMA RULES\r",
+                  "pm.test(\"Root data container is formatted as a valid JSON Array\", function () {\r",
+                  "    pm.expect(responseData).to.be.an('array');\r",
+                  "});\r",
+                  "\r",
+                  "// 3. INTERNAL MEMBER STRUCTURAL INTEGRITY TYPE CHECKING\r",
+                  "pm.test(\"Validate deep data layout fields inside each Profile row\", function () {\r",
+                  "    if (responseData.length > 0) {\r",
+                  "        responseData.forEach((profile) => {\r",
+                  "            // Check that keys exist and match explicit column data formats\r",
+                  "            pm.expect(profile).to.have.property('profile_id').that.is.a('number');\r",
+                  "            pm.expect(profile).to.have.property('bio').that.is.a('string');\r",
+                  "            pm.expect(profile).to.have.property('habbits').that.is.a('string');\r",
+                  "            pm.expect(profile).to.have.property('dateOfBirth').that.is.a('string');\r",
+                  "            pm.expect(profile).to.have.property('loyaltyPoints').that.is.a('number');\r",
+                  "            pm.expect(profile).to.have.property('userId').that.is.a('number');\r",
+                  "        });\r",
+                  "    } else {\r",
+                  "        console.warn(\"Profiles dataset returned empty. Skipping data assertions.\");\r",
+                  "    }\r",
+                  "});\r",
+                  "\r",
+                  "// 4. DATABASE INTEGRITY LOGIC TESTS\r",
+                  "pm.test(\"Enforce logical mapping sequence constraints\", function () {\r",
+                  "    if (responseData.length > 0) {\r",
+                  "        responseData.forEach((profile) => {\r",
+                  "            // Sequence IDs in primary keys cannot be zero or negative numbers\r",
+                  "            pm.expect(profile.profile_id).to.be.greaterThan(0);\r",
+                  "            pm.expect(profile.userId).to.be.greaterThan(0);\r",
+                  "            \r",
+                  "            // Date structure length matching check (YYYY-MM-DD pattern has exactly 10 characters)\r",
+                  "            pm.expect(profile.dateOfBirth.length).to.eql(10);\r",
+                  "        });\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "auth-token",
+                "value": "1234",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{localDev}}/profile?sort=loyaltyPoints",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "profile"
+              ],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "loyaltyPoints"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ADM-PROFILE 2.0 Success Create Profile",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// 1. Keep your exact, required IDs static so the backend recognizes them\r",
+                  "const targetUserId = 2;\r",
+                  "const targetProfileId = 2;\r",
+                  "\r",
+                  "// 2. Mix static context with a timestamp so the payload string updates slightly on every run\r",
+                  "const runTimestamp = new Date().toLocaleTimeString();\r",
+                  "const dynamicBio = `Aspiring Java Engineer to Accenture (Updated ${runTimestamp})`;\r",
+                  "const dynamicHabit = \"Coding everyday and building Spring Boot apps\";\r",
+                  "\r",
+                  "// 3. Keep the exact metadata from your payload\r",
+                  "const dynamicDOB = \"2004-01-12\";\r",
+                  "const dynamicPoints = 12;\r",
+                  "\r",
+                  "// 4. Bind them to variables for Postman to ingest\r",
+                  "pm.variables.set(\"dynamicProfileId\", targetProfileId);\r",
+                  "pm.variables.set(\"dynamicUserId\", targetUserId);\r",
+                  "pm.variables.set(\"dynamicBio\", dynamicBio);\r",
+                  "pm.variables.set(\"dynamicHabits\", dynamicHabit);\r",
+                  "pm.variables.set(\"dynamicDOB\", dynamicDOB);\r",
+                  "pm.variables.set(\"dynamicLoyaltyPoints\", dynamicPoints);\r",
+                  "\r",
+                  "console.log(\"🚀 Payload variables refreshed successfully for User ID: \" + targetUserId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. Status Code Assertion\r",
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+                  "});\r",
+                  "\r",
+                  "// 2. Response Time Check\r",
+                  "pm.test(\"Response time is less than 500ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "// 3. Parse Response JSON\r",
+                  "const responseData = pm.response.json();\r",
+                  "const sentUserId = pm.variables.get(\"dynamicUserId\");\r",
+                  "\r",
+                  "// 4. Schema and Data Type Validation\r",
+                  "pm.test(\"Response has correct structure and data types\", function () {\r",
+                  "    pm.expect(responseData).to.be.an('object');\r",
+                  "    pm.expect(responseData.bio).to.be.a('string');\r",
+                  "    pm.expect(responseData.habbits).to.be.a('string');\r",
+                  "    pm.expect(responseData.dateOfBirth).to.be.a('string');\r",
+                  "    pm.expect(responseData.loyaltyPoints).to.be.a('number');\r",
+                  "    pm.expect(responseData.userId).to.be.a('number');\r",
+                  "});\r",
+                  "\r",
+                  "// 5. Functional Data Integrity Assertions\r",
+                  "pm.test(\"Response data matches the sent payload\", function () {\r",
+                  "    pm.expect(responseData.userId).to.eql(Number(sentUserId));\r",
+                  "    pm.expect(responseData.bio).to.eql(pm.variables.get(\"dynamicBio\"));\r",
+                  "    pm.expect(responseData.habbits).to.eql(pm.variables.get(\"dynamicHabits\"));\r",
+                  "    pm.expect(responseData.dateOfBirth).to.eql(pm.variables.get(\"dynamicDOB\"));\r",
+                  "    pm.expect(responseData.loyaltyPoints).to.eql(Number(pm.variables.get(\"dynamicLoyaltyPoints\")));\r",
+                  "});\r",
+                  "\r",
+                  "// 6. Format Validations\r",
+                  "pm.test(\"Date of birth matches YYYY-MM-DD format\", function () {\r",
+                  "    const dateRegex = /^\\d{4}-\\d{2}-\\d{2}$/;\r",
+                  "    pm.expect(responseData.dateOfBirth).to.match(dateRegex);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n        \"bio\": \"Aspiring Java Engineer to Accenture\",\r\n        \"habbits\": \"Coding everyday and building Spring Boot apps\",\r\n        \"dateOfBirth\": \"2004-01-01\",\r\n        \"loyaltyPoints\": 12,\r\n        \"userId\": 7\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/profile",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "TC-ADM-PRODUCTS 1.0 Success List of All Products",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// 1. PIPELINE INITIALIZATION MARKER\r",
+                  "console.log(\"--- Executing Products API Pipeline ---\");\r",
+                  "pm.variables.set(\"productExecutionStamp\", Date.now());\r",
+                  "\r",
+                  "// 2. OPTIONAL: MOCK GENERATOR FOR DYNAMIC PRODUCT CREATION\r",
+                  "// Useful if you change this endpoint to a POST method later\r",
+                  "const randomPrice = (Math.random() * (100 - 10) + 10).toFixed(2); // Generates a price between 10.00 and 100.00\r",
+                  "const randomQty = Math.floor(Math.random() * 50) + 1;             // Generates a quantity between 1 and 50\r",
+                  "\r",
+                  "pm.variables.set(\"mockGeneratedPrice\", parseFloat(randomPrice));\r",
+                  "pm.variables.set(\"mockGeneratedQuantity\", randomQty);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. LATENCY & STATUS VERIFICATION\r",
+                  "pm.test(\"Status code is 200 OK\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response processing latency is within bounds (under 400ms)\", function () {\r",
+                  "    const baselineStamp = pm.variables.get(\"productExecutionStamp\");\r",
+                  "    if (baselineStamp) {\r",
+                  "        console.log(`Total roundtrip overhead: ${Date.now() - baselineStamp}ms`);\r",
+                  "    }\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+                  "});\r",
+                  "\r",
+                  "// Parse the returned products JSON payload\r",
+                  "const responseData = pm.response.json();\r",
+                  "\r",
+                  "// 2. HIGHEST LEVEL CONTAINER CHECK\r",
+                  "pm.test(\"Response layout is returned as a valid JSON Array\", function () {\r",
+                  "    pm.expect(responseData).to.be.an('array');\r",
+                  "});\r",
+                  "\r",
+                  "// 3. SCHEMA INTEGRITY AND TYPING TESTS\r",
+                  "pm.test(\"Validate structural keys and primitive types for every Product\", function () {\r",
+                  "    if (responseData.length > 0) {\r",
+                  "        responseData.forEach((product) => {\r",
+                  "            // Confirm all key-value mappings exist and hold valid database data types\r",
+                  "            pm.expect(product).to.have.property('id').that.is.a('number');\r",
+                  "            pm.expect(product).to.have.property('name').that.is.a('string');\r",
+                  "            pm.expect(product).to.have.property('description').that.is.a('string');\r",
+                  "            pm.expect(product).to.have.property('price').that.is.a('number');\r",
+                  "            pm.expect(product).to.have.property('quantity').that.is.a('number');\r",
+                  "            pm.expect(product).to.have.property('categoryId').that.is.a('number');\r",
+                  "        });\r",
+                  "    } else {\r",
+                  "        console.warn(\"Products dataset is empty. Skipping member field type loops.\");\r",
+                  "    }\r",
+                  "});\r",
+                  "\r",
+                  "// 4. LOGICAL INVENTORY CONSTRAINTS\r",
+                  "pm.test(\"Enforce logical system boundaries on inventory records\", function () {\r",
+                  "    if (responseData.length > 0) {\r",
+                  "        responseData.forEach((product) => {\r",
+                  "            // IDs must be standard positive sequential primary/foreign keys\r",
+                  "            pm.expect(product.id).to.be.greaterThan(0);\r",
+                  "            pm.expect(product.categoryId).to.be.greaterThan(0);\r",
+                  "            \r",
+                  "            // Operational math rules: Prices cannot be free/negative, stock cannot be negative\r",
+                  "            pm.expect(product.price).to.be.greaterThan(0.00);\r",
+                  "            pm.expect(product.quantity).to.be.at.least(0);\r",
+                  "        });\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localDev}}/products",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "price",
+                  "disabled": true
+                },
+                {
+                  "key": "sort",
+                  "value": "quantity",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "sort",
+                  "value": "name",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Category",
+      "item": [
+        {
+          "name": "TC-ADM-CATEGORIES 1.0 Success List of All Categories",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Clear out previous execution variables to maintain test isolation\r",
+                  "pm.variables.unset(\"register_name\");\r",
+                  "pm.variables.unset(\"register_description\");\r",
+                  "pm.variables.unset(\"register_num_of_products\");\r",
+                  "\r",
+                  "console.log(\"🧹 Pre-request: Context cleared for Category GET All execution.\");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. Status Code Assertion\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.expect(pm.response.code).to.eql(200);\r",
+                  "});\r",
+                  "\r",
+                  "// 2. Response Time Check\r",
+                  "pm.test(\"Response time is less than 600ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+                  "});\r",
+                  "\r",
+                  "// 3. Parse Response JSON Array\r",
+                  "const responseData = pm.response.json();\r",
+                  "\r",
+                  "// 4. Primary Structure Validation\r",
+                  "pm.test(\"Response returns a valid array of categories\", function () {\r",
+                  "    pm.expect(responseData).to.be.an('array');\r",
+                  "    pm.expect(responseData.length).to.be.at.least(1); // Ensures database isn't empty\r",
+                  "});\r",
+                  "\r",
+                  "// 5. Deep Schema Loop Validation\r",
+                  "pm.test(\"All categories match structural and deep-nested schemas\", function () {\r",
+                  "    const dateTimeRegex = /^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/;\r",
+                  "\r",
+                  "    responseData.forEach((category, idx) => {\r",
+                  "        // Parent Object Assertions\r",
+                  "        pm.expect(category.name, `Category[${idx}] missing name`).to.be.a('string');\r",
+                  "        pm.expect(category.createdAt, `Category[${idx}] timestamp error`).to.be.a('string').and.match(dateTimeRegex);\r",
+                  "        pm.expect(category.num_of_products, `Category[${idx}] num_of_products should be null`).to.be.null;\r",
+                  "        pm.expect(category.products, `Category[${idx}] products structure missing`).to.be.an('array');\r",
+                  "        \r",
+                  "        // Description can be null or a string depending on creation method\r",
+                  "        if (category.description !== null) {\r",
+                  "            pm.expect(category.description).to.be.a('string');\r",
+                  "        }\r",
+                  "\r",
+                  "        // Loop nested products within each category array\r",
+                  "        category.products.forEach((product, prodIdx) => {\r",
+                  "            pm.expect(product.id, `Product[${prodIdx}] missing ID`).to.be.a('number');\r",
+                  "            pm.expect(product.name, `Product[${prodIdx}] missing string name`).to.be.a('string');\r",
+                  "            pm.expect(product.price, `Product[${prodIdx}] price missing number validation`).to.be.a('number');\r",
+                  "            pm.expect(product.quantity, `Product[${prodIdx}] quantity error`).to.be.a('number');\r",
+                  "            \r",
+                  "            // Nested Category Validation inside Product\r",
+                  "            pm.expect(product.category).to.be.an('object');\r",
+                  "            pm.expect(product.category.id).to.be.a('number');\r",
+                  "            pm.expect(product.category.name).to.be.a('string').and.to.eql(category.name); // Verifies mapping consistency\r",
+                  "            \r",
+                  "            // Conditional Seller Validation\r",
+                  "            if (product.seller !== null) {\r",
+                  "                pm.expect(product.seller).to.be.an('object');\r",
+                  "                pm.expect(product.seller.id).to.be.a('number');\r",
+                  "                pm.expect(product.seller.name).to.be.a('string');\r",
+                  "                pm.expect(product.seller.storeName).to.be.a('string');\r",
+                  "            }\r",
+                  "        });\r",
+                  "    });\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "auth-token",
+                "value": "!Passw0rd123",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{localDev}}/categories",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "categories"
+              ],
+              "query": [
+                {
+                  "key": "auth-token",
+                  "value": "!Passw0rd123",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ADM-CATEGORIES 1.0 Success List of All Categories",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Generate a unique identifier to prevent duplicate category names during testing\r",
+                  "const uniqueId = Math.floor(Math.random() * 10000) + 1;\r",
+                  "\r",
+                  "// 1. Dynamic Testing Name (e.g., \"Testing Electronics (ID: 4821)\")\r",
+                  "if (!pm.variables.get(\"register_name\")) {\r",
+                  "    pm.variables.set(\"register_name\", `Testing Category ${uniqueId}`);\r",
+                  "}\r",
+                  "\r",
+                  "// 2. Dynamic Testing Description\r",
+                  "if (!pm.variables.get(\"register_description\")) {\r",
+                  "    pm.variables.set(\"register_description\", `This is a dynamically generated category description for automated testing ID ${uniqueId}.`);\r",
+                  "}\r",
+                  "\r",
+                  "// 3. Number of Products (Initialized as an empty stringified array to maintain valid JSON syntax)\r",
+                  "if (!pm.variables.get(\"register_num_of_products\")) {\r",
+                  "    pm.variables.set(\"register_num_of_products\", JSON.stringify([]));\r",
+                  "}\r",
+                  "\r",
+                  "console.log(\"Pre-request: Category testing variables initialized.\");\r",
+                  "console.log({\r",
+                  "    name: pm.variables.get(\"register_name\"),\r",
+                  "    description: pm.variables.get(\"register_description\"),\r",
+                  "    num_of_products: pm.variables.get(\"register_num_of_products\")\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. Status Code Assertion\r",
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+                  "});\r",
+                  "\r",
+                  "// 2. Response Time Check\r",
+                  "pm.test(\"Response time is less than 500ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "// 3. Dynamic Parsing\r",
+                  "const responseData = pm.response.json();\r",
+                  "const requestData = JSON.parse(pm.request.body.raw);\r",
+                  "\r",
+                  "// 4. Schema and Data Type Validation\r",
+                  "pm.test(\"Response schema matches reference structure\", function () {\r",
+                  "    pm.expect(responseData).to.be.an('object');\r",
+                  "    pm.expect(responseData.name).to.be.a('string');\r",
+                  "    pm.expect(responseData.description).to.be.a('string');\r",
+                  "    pm.expect(responseData.createdAt).to.be.a('string');\r",
+                  "    \r",
+                  "    // Strict verification matching your reference: num_of_products is null, products is an array\r",
+                  "    pm.expect(responseData.num_of_products).to.be.null;\r",
+                  "    pm.expect(responseData.products).to.be.an('array');\r",
+                  "});\r",
+                  "\r",
+                  "// 5. Data Integrity Validation\r",
+                  "pm.test(\"Response data exactly matches sent fields\", function () {\r",
+                  "    pm.expect(responseData.name).to.eql(requestData.name);\r",
+                  "    pm.expect(responseData.description).to.eql(requestData.description);\r",
+                  "    pm.expect(responseData.products).to.have.lengthOf(0); // Ensures it initialized empty\r",
+                  "});\r",
+                  "\r",
+                  "// 6. Date Format Validation (YYYY-MM-DD HH:MM:SS)\r",
+                  "pm.test(\"createdAt matches date time format\", function () {\r",
+                  "    const dateTimeRegex = /^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/;\r",
+                  "    pm.expect(responseData.createdAt).to.match(dateTimeRegex);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{register_name}}\",\r\n    \"description\": \"{{register_description}}\",\r\n    \"num_of_products\": \"{{register_num_of_products}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/categories",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "categories"
+              ],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "storeName",
+                  "disabled": true
+                },
+                {
+                  "key": "sort",
+                  "value": "name",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ADM-CATEGORIES 2.0 Success Create Categories",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const uniqueId = Math.floor(Math.random() * 10000) + 1;\r",
+                  "\r",
+                  "if (!pm.variables.get(\"register_name\")) {\r",
+                  "    pm.variables.set(\"register_name\", `Testing Category ${uniqueId}`);\r",
+                  "}\r",
+                  "\r",
+                  "if (!pm.variables.get(\"register_description\")) {\r",
+                  "    pm.variables.set(\"register_description\", `This is a dynamically generated category description for automated testing ID ${uniqueId}.`);\r",
+                  "}\r",
+                  "\r",
+                  "// Set as string \"0\" to match your reference\r",
+                  "if (!pm.variables.get(\"register_num_of_products\")) {\r",
+                  "    pm.variables.set(\"register_num_of_products\", \"0\");\r",
+                  "}\r",
+                  "\r",
+                  "console.log(\"✅ Dynamic payload setup complete.\");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. Status Code Assertion\r",
+                  "pm.test(\"Status code is 200 or 201\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+                  "});\r",
+                  "\r",
+                  "// 2. Response Time Check\r",
+                  "pm.test(\"Response time is less than 500ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "});\r",
+                  "\r",
+                  "// 3. Dynamic Parsing\r",
+                  "const responseData = pm.response.json();\r",
+                  "const requestData = JSON.parse(pm.request.body.raw);\r",
+                  "\r",
+                  "// 4. Schema and Flexible Data Target Validation\r",
+                  "pm.test(\"Response matches expected type specifications\", function () {\r",
+                  "    pm.expect(responseData).to.be.an('object');\r",
+                  "    pm.expect(responseData.name).to.be.a('string');\r",
+                  "    pm.expect(responseData.createdAt).to.be.a('string');\r",
+                  "    pm.expect(responseData.products).to.be.an('array');\r",
+                  "});\r",
+                  "\r",
+                  "// 5. Explicit Logic Check for Product Counts & Arrays (POST & PUT generalized)\r",
+                  "pm.test(\"Validates product counts match array size bounds\", function () {\r",
+                  "    // Convert string \"0\" or \"5\" to a true JavaScript Number\r",
+                  "    const productCountValue = Number(responseData.num_of_products);\r",
+                  "    \r",
+                  "    // Check if the number of products is 0 or greater\r",
+                  "    pm.expect(productCountValue).to.be.at.least(0);\r",
+                  "    \r",
+                  "    // Ensure the counts exactly match the actual number of products listed in the array\r",
+                  "    pm.expect(responseData.products.length).to.eql(productCountValue);\r",
+                  "    \r",
+                  "    // Validates condition: Either empty [] or has structured objects inside\r",
+                  "    if (productCountValue === 0) {\r",
+                  "        pm.expect(responseData.products).to.have.lengthOf(0);\r",
+                  "    } else {\r",
+                  "        pm.expect(responseData.products.length).to.be.above(0);\r",
+                  "    }\r",
+                  "});\r",
+                  "\r",
+                  "// 6. Data Integrity Assertions\r",
+                  "pm.test(\"Response strings match input criteria\", function () {\r",
+                  "    pm.expect(responseData.name).to.eql(requestData.name);\r",
+                  "    pm.expect(responseData.description).to.eql(requestData.description);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "auth-token",
+                "value": "!Passw0rd123",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{register_name}}\",\r\n    \"description\": \"{{register_description}}\",\r\n    \"num_of_products\": \"{{register_num_of_products}}\",\r\n    \"products\": []\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/categories/3",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "categories",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-ADM-CATEGORIES 2.0 Success Delete Categories",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// // Generate a random suffix for a unique email\r",
+                  "// const randomId = Math.floor(Math.random() * 10000);\r",
+                  "// const uniqueEmail = `chQuinay+${randomId}@gmail.com`;\r",
+                  "\r",
+                  "// // Set variables for the request body\r",
+                  "// pm.variables.set(\"register_name\", \"Christopher Quinay\");\r",
+                  "// pm.variables.set(\"register_email\", uniqueEmail);\r",
+                  "// pm.variables.set(\"register_password\", \"!Passw0rd123\");\r",
+                  "\r",
+                  "// console.log(`Pre-request: Registering user with email ${uniqueEmail}`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// // 1. Verify successful creation status code (201 Created)\r",
+                  "// pm.test(\"Status code is 201 (Created)\", function () {\r",
+                  "//     pm.response.to.have.status(201);\r",
+                  "// });\r",
+                  "\r",
+                  "// // 2. Verify API performance (Response time should be faster than 500ms)\r",
+                  "// pm.test(\"Response time is acceptable (under 500ms)\", function () {\r",
+                  "//     pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                  "// });\r",
+                  "\r",
+                  "// // 3. Verify Response Headers\r",
+                  "// pm.test(\"Response headers include Content-Type application/json\", function () {\r",
+                  "//     pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                  "// });\r",
+                  "\r",
+                  "// // 4. Parse and validate the response payload\r",
+                  "// pm.test(\"Response body matches the newly created user schema\", function () {\r",
+                  "//     const jsonData = pm.response.json();\r",
+                  "    \r",
+                  "//     // Assert critical properties exist and check their precise data types\r",
+                  "//     pm.expect(jsonData).to.have.property(\"user_id\").and.to.be.a(\"number\");\r",
+                  "//     pm.expect(jsonData).to.have.property(\"createdAt\").and.to.be.a(\"string\");\r",
+                  "//     pm.expect(jsonData).to.have.property(\"password\").and.to.be.a(\"string\");\r",
+                  "    \r",
+                  "//     // Verify values match what we sent (fallback to your string literals if variables aren't used)\r",
+                  "//     const expectedName = pm.variables.get(\"register_name\") || \"Christopher Quinay\";\r",
+                  "//     const expectedEmail = pm.variables.get(\"register_email\") || \"chQuinay@gmail.com\";\r",
+                  "    \r",
+                  "//     pm.expect(jsonData.name).to.eql(expectedName);\r",
+                  "//     pm.expect(jsonData.email).to.eql(expectedEmail);\r",
+                  "    \r",
+                  "//     // Validate Profile Structure\r",
+                  "//     pm.expect(jsonData).to.have.property(\"profile\");\r",
+                  "//     pm.expect(jsonData.profile).to.be.null;\r",
+                  "    \r",
+                  "//     // Strict Validation for Addresses Array\r",
+                  "//     pm.expect(jsonData).to.have.property(\"addresses\");\r",
+                  "//     pm.expect(jsonData.addresses).to.be.an(\"array\"); // Ensures it's an array type\r",
+                  "//     pm.expect(jsonData.addresses).to.be.empty;        // Ensures the array has a length of 0\r",
+                  "    \r",
+                  "//     // Validate Date Format (YYYY-MM-DD HH:MM:SS) using Regex match\r",
+                  "//     const dateRegex = /^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$/;\r",
+                  "//     pm.test(\"createdAt date format matches YYYY-MM-DD HH:mm:ss\", function() {\r",
+                  "//         pm.expect(jsonData.createdAt).to.match(dateRegex);\r",
+                  "//     });\r",
+                  "\r",
+                  "//     // 5. Environment Variable Extraction\r",
+                  "//     if (jsonData.user_id) {\r",
+                  "//         pm.environment.set(\"current_user_id\", jsonData.user_id);\r",
+                  "//         console.log(`Saved user_id ${jsonData.user_id} to Environment.`);\r",
+                  "//     }\r",
+                  "// });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{register_name}}\",\r\n    \"email\": \"{{register_email}}\",\r\n    \"password\": \"{{register_password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localDev}}/users",
+              "host": [
+                "{{localDev}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Testing Endpoints",
+      "item": [
+        {
+          "name": "Test",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. LATENCY & STATUS VERIFICATION\r",
+                  "pm.test(\"Status code is 200 OK\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response processing latency is within bounds (under 400ms)\", function () {\r",
+                  "    const baselineStamp = pm.variables.get(\"productExecutionStamp\");\r",
+                  "    if (baselineStamp) {\r",
+                  "        console.log(`Total roundtrip overhead: ${Date.now() - baselineStamp}ms`);\r",
+                  "    }\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+                  "});\r",
+                  "\r",
+                  "// Parse the returned products JSON payload\r",
+                  "const responseData = pm.response.json();\r",
+                  "\r",
+                  "// 2. HIGHEST LEVEL CONTAINER CHECK\r",
+                  "pm.test(\"Response layout is returned as a valid JSON Array\", function () {\r",
+                  "    pm.expect(responseData).to.be.an('array');\r",
+                  "});\r",
+                  "\r",
+                  "// 3. SCHEMA INTEGRITY AND TYPING TESTS\r",
+                  "pm.test(\"Validate structural keys and primitive types for every Product\", function () {\r",
+                  "    if (responseData.length > 0) {\r",
+                  "        responseData.forEach((product) => {\r",
+                  "            // Confirm all key-value mappings exist and hold valid database data types\r",
+                  "            pm.expect(product).to.have.property('id').that.is.a('number');\r",
+                  "            pm.expect(product).to.have.property('name').that.is.a('string');\r",
+                  "            pm.expect(product).to.have.property('description').that.is.a('string');\r",
+                  "            pm.expect(product).to.have.property('price').that.is.a('number');\r",
+                  "            pm.expect(product).to.have.property('quantity').that.is.a('number');\r",
+                  "            pm.expect(product).to.have.property('categoryId').that.is.a('number');\r",
+                  "        });\r",
+                  "    } else {\r",
+                  "        console.warn(\"Products dataset is empty. Skipping member field type loops.\");\r",
+                  "    }\r",
+                  "});\r",
+                  "\r",
+                  "// 4. LOGICAL INVENTORY CONSTRAINTS\r",
+                  "pm.test(\"Enforce logical system boundaries on inventory records\", function () {\r",
+                  "    if (responseData.length > 0) {\r",
+                  "        responseData.forEach((product) => {\r",
+                  "            // IDs must be standard positive sequential primary/foreign keys\r",
+                  "            pm.expect(product.id).to.be.greaterThan(0);\r",
+                  "            pm.expect(product.categoryId).to.be.greaterThan(0);\r",
+                  "            \r",
+                  "            // Operational math rules: Prices cannot be free/negative, stock cannot be negative\r",
+                  "            pm.expect(product.price).to.be.greaterThan(0.00);\r",
+                  "            pm.expect(product.quantity).to.be.at.least(0);\r",
+                  "        });\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// 1. PIPELINE INITIALIZATION MARKER\r",
+                  "console.log(\"--- Executing Products API Pipeline ---\");\r",
+                  "pm.variables.set(\"productExecutionStamp\", Date.now());\r",
+                  "\r",
+                  "// 2. OPTIONAL: MOCK GENERATOR FOR DYNAMIC PRODUCT CREATION\r",
+                  "// Useful if you change this endpoint to a POST method later\r",
+                  "const randomPrice = (Math.random() * (100 - 10) + 10).toFixed(2); // Generates a price between 10.00 and 100.00\r",
+                  "const randomQty = Math.floor(Math.random() * 50) + 1;             // Generates a quantity between 1 and 50\r",
+                  "\r",
+                  "pm.variables.set(\"mockGeneratedPrice\", parseFloat(randomPrice));\r",
+                  "pm.variables.set(\"mockGeneratedQuantity\", randomQty);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/products",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
