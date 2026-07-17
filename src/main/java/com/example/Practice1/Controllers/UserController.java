@@ -16,12 +16,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("users")
 @AllArgsConstructor
 public class UserController {
     @Autowired
     private final UserRepository userRepository;
-
     private final UserMapper userMapper;
 
     @GetMapping

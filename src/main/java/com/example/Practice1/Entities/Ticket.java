@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Columns;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -27,5 +30,8 @@ public class Ticket {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticketOwnerId", nullable = false)
-    private User ticketOwnerId;
+    private User ticketOwner;
+
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
 }

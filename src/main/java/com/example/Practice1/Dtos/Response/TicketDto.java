@@ -20,5 +20,5 @@ public class TicketDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    private User ticketOwnerId;
+    private Long ticketOwnerId;
 }
