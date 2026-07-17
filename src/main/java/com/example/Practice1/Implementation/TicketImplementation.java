@@ -33,7 +33,7 @@ public class TicketImplementation implements TicketService {
         String sortField = Set.of("ticketNumber", "description")
                 .contains(sort) ? sort : "ticketNumber";
 
-        return ticketRepository.findAll(Sort.by(sort))
+        return ticketRepository.findAll(Sort.by(sortField))
                 .stream()
                 .map(ticketMapper::toDto)
                 .toList();
