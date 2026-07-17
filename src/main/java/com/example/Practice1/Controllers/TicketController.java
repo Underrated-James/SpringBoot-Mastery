@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -34,22 +35,29 @@ public class TicketController {
 
 
     @GetMapping
-    public Iterable<TicketDto> getAllTickets(
+    public ResponseEntity<ApiResponse<List<TicketDto>>> getAllTickets(
             @RequestParam(required = false, defaultValue = "")String sort
     ){
-        if(!Set.of("ticketNumber", "description").contains(sort)){
-            sort = "ticketNumber";
-        }
+        String sortField = Set.of("ticketNumber", "description").contains(sort) ? sort : "ticketNumber";
 
-        return ticketRepository.findAll(Sort.by(sort))
+        List<TicketDto> tickets = ticketRepository.findAll(Sort.by(sortField))
                 .stream()
                 .map(ticketMapper::toDto)
                 .toList();
+
+        ApiResponse<List<TicketDto>> response = ApiResponse.<List<TicketDto>>builder()
+                .status(HttpStatus.OK.value())
+                .message("All tickets retrieve successfully")
+                .timestamp(LocalDateTime.now())
+                .data(tickets)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<TicketDto> getTicketById(
+    public ResponseEntity<ApiResponse<TicketDto>> getTicketById(
             @PathVariable long id
     ){
         var ticket = ticketRepository.findById(id).orElse(null);
@@ -58,12 +66,19 @@ public class TicketController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(ticketMapper.toDto(ticket));
+        var ticketDto = ticketMapper.toDto(ticket);
+
+        return ResponseEntity.ok(ApiResponse.<TicketDto>builder()
+                .status(HttpStatus.OK.value())
+                .message("Ticket retrieve by id")
+                .timestamp(LocalDateTime.now())
+                .data(ticketDto)
+                .build());
 
     }
 
     @PostMapping
-    public ResponseEntity<TicketDto> createTicket(
+    public ResponseEntity<ApiResponse<TicketDto>> createTicket(
             @RequestBody TicketRequestDto request,
             UriComponentsBuilder uriComponentsBuilder
     ){
@@ -78,12 +93,19 @@ public class TicketController {
 
         var uri = uriComponentsBuilder.path("/tickets/{id}").buildAndExpand(ticketDto.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(ticketDto);
+        ApiResponse<TicketDto> response = ApiResponse.<TicketDto>builder()
+                .status(HttpStatus.CREATED.value())
+                .message("Ticket created successfully")
+                .timestamp(LocalDateTime.now())
+                .data(ticketDto)
+                .build();
+
+        return ResponseEntity.created(uri).body(response);
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TicketDto> updateTicket(
+    public ResponseEntity<ApiResponse<TicketDto>> updateTicket(
             @PathVariable(name = "id")Long id,
             @RequestBody TicketUpdateDto request
             ){
@@ -97,7 +119,12 @@ public class TicketController {
 
         ticketRepository.save(ticket);
 
-        return ResponseEntity.ok(ticketMapper.toDto(ticket));
+        return ResponseEntity.ok(ApiResponse.<TicketDto>builder()
+                .status(HttpStatus.OK.value())
+                .message("Ticket Updated Successfully")
+                .timestamp(LocalDateTime.now())
+                .data(ticketMapper.toDto(ticket))
+                .build());
 
     }
 
